@@ -1,0 +1,2229 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light">
+  <title>Mente Clara · Herramienta orientativa de autoevaluación</title>
+  <meta name="description" content="Espacio tranquilo para revisar, sin juicios, cómo estás y qué te pasa. Ocho módulos: depresión, autismo, ansiedad, TDAH, acoso, abuso, cognición y razonamiento con estimación orientativa en escala de CI. Orientativo, nunca un diagnóstico.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================================
+   Mente Clara · Diseño profesional v2
+   Sistema de diseño refinado: tokens, tipografía, layout y componentes
+   ========================================================================== */
+
+/* ---------- 1. Tokens ---------- */
+:root {
+  --bg: #f4f6f8;
+  --bg-soft: #eef1f5;
+  --surface: #ffffff;
+  --surface-2: #f8fafb;
+  --surface-3: #f1f4f7;
+  --ink: #0c1222;
+  --ink-2: #2a3548;
+  --ink-3: #5b6b7f;
+  --ink-4: #8b9aab;
+  --line: #e4e9ef;
+  --line-2: #eef2f6;
+  --line-strong: #d0d8e2;
+  --brand: #0d5c61;
+  --brand-2: #094548;
+  --brand-3: #e6f3f4;
+  --brand-4: #c5e4e6;
+  --brand-line: #b8d9db;
+  --brand-glow: rgba(13, 92, 97, 0.18);
+  --amber: #a16207;
+  --amber-bg: #fffbeb;
+  --amber-line: #fde68a;
+  --red: #b91c1c;
+  --red-bg: #fef2f2;
+  --red-line: #fecaca;
+  --green: #15803d;
+  --green-bg: #f0fdf4;
+  --r-xs: 6px;
+  --r-sm: 10px;
+  --r: 12px;
+  --r-md: 16px;
+  --r-lg: 20px;
+  --r-xl: 24px;
+  --r-pill: 999px;
+  --sh-xs: 0 1px 2px rgba(12, 18, 34, 0.04);
+  --sh-1: 0 1px 3px rgba(12, 18, 34, 0.05), 0 1px 2px rgba(12, 18, 34, 0.03);
+  --sh-2: 0 4px 12px rgba(12, 18, 34, 0.06), 0 1px 3px rgba(12, 18, 34, 0.04);
+  --sh-3: 0 12px 32px rgba(12, 18, 34, 0.08), 0 4px 12px rgba(12, 18, 34, 0.04);
+  --sh-4: 0 20px 48px rgba(12, 18, 34, 0.10);
+  --sh-brand: 0 4px 14px rgba(13, 92, 97, 0.22);
+  --f-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --f-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --wrap: 1120px;
+  --ease: cubic-bezier(0.25, 0.8, 0.25, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ---------- 2. Reset y base ---------- */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--f-sans);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.65;
+  font-size: 15.5px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  letter-spacing: -0.011em;
+}
+h1, h2, h3, h4 {
+  font-family: var(--f-serif);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+h1 { font-size: clamp(2.15rem, 4.8vw, 3.05rem); }
+h2 { font-size: clamp(1.45rem, 2.8vw, 1.9rem); }
+h3 { font-size: 1.08rem; letter-spacing: -0.015em; }
+p { color: var(--ink-2); }
+a { color: var(--brand); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+img { max-width: 100%; display: block; }
+button, input, textarea, select { font: inherit; color: inherit; }
+
+:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.skip {
+  position: absolute; left: -9999px; top: 0;
+  background: var(--brand); color: #fff;
+  padding: 0.7rem 1.15rem; border-radius: 0 0 var(--r-sm) 0; z-index: 999;
+  font-weight: 600; font-size: 0.9rem;
+}
+.skip:focus { left: 0; }
+
+.wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 1.5rem; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ---------- 3. Cabecera ---------- */
+.site-header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: saturate(180%) blur(16px);
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
+  border-bottom: 1px solid rgba(228, 233, 239, 0.9);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset;
+}
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1.5rem; min-height: 64px;
+}
+.brand {
+  display: flex; align-items: center; gap: 0.7rem;
+  text-decoration: none; cursor: pointer; background: none; border: none;
+  transition: opacity 0.2s;
+}
+.brand:hover { opacity: 0.88; }
+.brand-mark {
+  width: 36px; height: 36px; border-radius: 10px; flex: none;
+  background: linear-gradient(145deg, var(--brand) 0%, #127a80 100%);
+  color: #fff; display: flex; align-items: center; justify-content: center;
+  font-size: 1.05rem; box-shadow: var(--sh-xs), 0 0 0 1px rgba(13, 92, 97, 0.12);
+  letter-spacing: 0;
+}
+.brand-text { display: flex; flex-direction: column; line-height: 1.2; text-align: left; }
+.brand-text strong {
+  font-family: var(--f-serif); font-size: 1.08rem; font-weight: 600; color: var(--ink);
+}
+.brand-text span {
+  font-size: 0.68rem; color: var(--ink-4); letter-spacing: 0.03em; font-weight: 500;
+}
+.site-nav { display: flex; align-items: center; gap: 0.2rem; flex-wrap: wrap; }
+.site-nav a {
+  color: var(--ink-3); text-decoration: none; font-size: 0.84rem; font-weight: 500;
+  padding: 0.42rem 0.72rem; border-radius: var(--r-xs);
+  transition: background 0.15s, color 0.15s; cursor: pointer;
+}
+.site-nav a:hover { background: var(--brand-3); color: var(--brand-2); }
+
+/* ---------- 4. Vistas ---------- */
+.view { display: none; }
+.view.is-active { display: block; }
+
+/* ---------- 5. Hero ---------- */
+.hero {
+  padding: 4.75rem 0 3.25rem; text-align: center;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: ""; position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(13, 92, 97, 0.09), transparent 55%),
+    radial-gradient(ellipse 40% 30% at 85% 60%, rgba(13, 92, 97, 0.04), transparent 50%);
+  pointer-events: none;
+}
+.hero .wrap { position: relative; }
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  background: var(--brand-3); color: var(--brand-2);
+  border: 1px solid var(--brand-line);
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.4rem 0.95rem; border-radius: var(--r-pill); margin-bottom: 1.4rem;
+}
+.hero h1 { margin-bottom: 1.05rem; }
+.lead {
+  font-size: 1.08rem; color: var(--ink-2); max-width: 620px;
+  margin: 0 auto 2.1rem; line-height: 1.75; font-weight: 400;
+}
+.lead strong { color: var(--ink); font-weight: 600; }
+.actions {
+  display: flex; flex-wrap: wrap; gap: 0.65rem;
+  justify-content: center; margin-bottom: 2.85rem;
+}
+
+.stats {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 0.75rem; max-width: 720px; margin: 0 auto;
+}
+.stat {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--r-md); padding: 1.1rem 0.85rem;
+  box-shadow: var(--sh-1); transition: box-shadow 0.2s, border-color 0.2s;
+}
+.stat:hover { box-shadow: var(--sh-2); border-color: var(--line-strong); }
+.stat-value {
+  font-family: var(--f-serif); font-size: 1.55rem; font-weight: 600;
+  color: var(--brand); line-height: 1.1;
+}
+.stat-label {
+  font-size: 0.72rem; color: var(--ink-4); margin-top: 0.25rem;
+  letter-spacing: 0.02em; font-weight: 500;
+}
+
+/* ---------- 6. Secciones ---------- */
+.section { padding: 3.5rem 0; }
+.section--tight { padding: 2.5rem 0; }
+.section-alt {
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.section-head { max-width: 640px; margin-bottom: 2.35rem; }
+.section-label {
+  font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em;
+  color: var(--brand); margin-bottom: 0.55rem;
+}
+.section-head h2 { margin-bottom: 0.55rem; }
+.section-head p { color: var(--ink-3); font-size: 0.98rem; line-height: 1.7; }
+
+/* ---------- 7. Avisos ---------- */
+.notice {
+  display: flex; gap: 1.15rem;
+  background: var(--surface); border: 1px solid var(--line);
+  border-left: 3px solid var(--brand); border-radius: var(--r-md);
+  padding: 1.55rem 1.65rem; box-shadow: var(--sh-1);
+}
+.notice-icon {
+  flex: none; width: 32px; height: 32px; border-radius: 50%;
+  background: var(--brand-3); color: var(--brand-2);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 0.9rem; font-family: var(--f-serif);
+}
+.notice h3 { margin-bottom: 0.5rem; font-size: 1.1rem; }
+.notice p { font-size: 0.935rem; line-height: 1.7; }
+.notice p + p { margin-top: 0.75rem; }
+.notice strong { color: var(--ink); }
+
+.callout {
+  background: var(--amber-bg); border: 1px solid var(--amber-line);
+  border-radius: var(--r-md); padding: 1.3rem 1.45rem; margin-top: 1.35rem;
+}
+.callout .callout-title {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-weight: 700; color: #92400e; font-size: 0.92rem; margin-bottom: 0.4rem;
+}
+.callout p { color: #78350f; font-size: 0.9rem; line-height: 1.65; }
+
+/* ---------- 8. Pasos ---------- */
+.steps {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1rem;
+}
+.step {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--r-md); padding: 1.45rem 1.35rem;
+  box-shadow: var(--sh-1); position: relative;
+  transition: box-shadow 0.2s, border-color 0.2s, transform 0.2s var(--ease);
+}
+.step:hover {
+  box-shadow: var(--sh-2); border-color: var(--brand-line); transform: translateY(-2px);
+}
+.step-num {
+  font-family: var(--f-serif); font-size: 0.78rem; font-weight: 600; color: var(--brand-2);
+  width: 28px; height: 28px; border-radius: 8px; background: var(--brand-3);
+  display: flex; align-items: center; justify-content: center; margin-bottom: 0.9rem;
+}
+.step h3 { font-size: 0.98rem; margin-bottom: 0.35rem; }
+.step p { font-size: 0.86rem; color: var(--ink-3); line-height: 1.6; }
+
+/* ---------- 9. Tarjetas de módulo ---------- */
+.modules-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.1rem;
+}
+.module-card {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--r-lg); padding: 1.5rem 1.4rem;
+  box-shadow: var(--sh-1);
+  display: flex; flex-direction: column; gap: 0.65rem;
+  transition: transform 0.22s var(--ease-out), box-shadow 0.22s var(--ease-out), border-color 0.22s;
+}
+.module-card:hover {
+  transform: translateY(-4px); box-shadow: var(--sh-3);
+  border-color: var(--brand-line);
+}
+.module-top { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; }
+.module-icon {
+  width: 44px; height: 44px; border-radius: 12px; flex: none;
+  display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
+  background: var(--brand-3); color: var(--brand-2);
+  box-shadow: var(--sh-xs);
+}
+.icon-dep { background: #eef2ff; color: #3730a3; }
+.icon-aut { background: #f0fdf4; color: #166534; }
+.icon-anx { background: #fff7ed; color: #9a3412; }
+.icon-tdah, .icon-adhd { background: #fdf4ff; color: #86198f; }
+.icon-aco, .icon-bull { background: #fef2f2; color: #991b1b; }
+.icon-abu { background: #f5f3ff; color: #5b21b6; }
+.icon-cog { background: #ecfeff; color: #155e75; }
+.icon-iq {
+  background: linear-gradient(145deg, var(--brand), #128e94); color: #fff;
+  box-shadow: var(--sh-brand);
+}
+.module-num {
+  font-family: var(--f-serif); font-size: 0.74rem; color: var(--ink-4); font-weight: 600;
+}
+.module-card h3 { font-size: 1.06rem; }
+.module-card p { font-size: 0.86rem; color: var(--ink-3); flex: 1; line-height: 1.6; }
+.module-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.tag {
+  font-size: 0.64rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 0.2rem 0.55rem; border-radius: var(--r-pill);
+  background: var(--brand-3); color: var(--brand-2); border: 1px solid var(--brand-line);
+}
+.tag--alt { background: #fef7ed; color: #9a3412; border-color: #fed7aa; }
+.tag--new { background: var(--brand); color: #fff; border-color: transparent; }
+.module-meta {
+  display: flex; justify-content: space-between; gap: 0.75rem;
+  font-size: 0.76rem; color: var(--ink-4); font-weight: 500;
+  padding-top: 0.8rem; border-top: 1px solid var(--line-2);
+}
+
+/* ---------- 10. Botones ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
+  padding: 0.72rem 1.35rem; border-radius: var(--r-sm);
+  font-weight: 600; font-size: 0.9rem; cursor: pointer; border: 1px solid transparent;
+  text-decoration: none; transition: all 0.18s var(--ease); white-space: nowrap;
+  letter-spacing: -0.01em;
+}
+.btn-primary {
+  background: var(--brand); color: #fff;
+  box-shadow: var(--sh-brand);
+}
+.btn-primary:hover {
+  background: var(--brand-2); transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(13, 92, 97, 0.28);
+}
+.btn-primary:active { transform: translateY(0); }
+.btn-primary:disabled {
+  opacity: 0.42; cursor: not-allowed; transform: none; box-shadow: none;
+}
+.btn-secondary {
+  background: var(--surface); color: var(--ink); border-color: var(--line);
+  box-shadow: var(--sh-xs);
+}
+.btn-secondary:hover {
+  border-color: var(--brand); color: var(--brand-2); background: var(--surface-2);
+}
+.btn-ghost {
+  background: transparent; color: var(--ink-3); border-color: transparent;
+  padding: 0.5rem 0.85rem;
+}
+.btn-ghost:hover { color: var(--brand); background: var(--brand-3); }
+.btn-block { width: 100%; }
+
+/* ---------- 11. Tipos de prueba ---------- */
+.tests-list {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(265px, 1fr)); gap: 0.65rem;
+}
+.test-item {
+  display: flex; gap: 0.85rem; align-items: flex-start;
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--r-sm); padding: 0.95rem 1.05rem;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.test-item:hover { border-color: var(--line-strong); box-shadow: var(--sh-xs); }
+.test-num {
+  flex: none; width: 24px; height: 24px; border-radius: 7px;
+  background: var(--brand-3); color: var(--brand-2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.72rem; font-weight: 700; font-family: var(--f-serif);
+}
+.test-item strong { display: block; font-size: 0.9rem; font-weight: 600; color: var(--ink); }
+.test-item span { font-size: 0.8rem; color: var(--ink-3); line-height: 1.5; }
+
+/* ---------- 12. Caja de calificación ---------- */
+.score-rules {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--r-md); padding: 1.6rem 1.7rem; box-shadow: var(--sh-1);
+}
+.score-rules ul { list-style: none; display: grid; gap: 0.85rem; }
+.score-rules li {
+  position: relative; padding-left: 1.65rem; font-size: 0.92rem;
+  color: var(--ink-2); line-height: 1.65;
+}
+.score-rules li::before {
+  content: ""; position: absolute; left: 0; top: 0.55em;
+  width: 8px; height: 8px; border-radius: 2.5px; background: var(--brand);
+}
+.score-rules strong { color: var(--ink); }
+
+.levels {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.65rem; margin-top: 1.5rem;
+}
+.level {
+  border: 1px solid var(--line); border-radius: var(--r-sm);
+  padding: 0.9rem 1rem; background: var(--surface-2);
+}
+.level-name { font-size: 0.88rem; font-weight: 700; font-family: var(--f-serif); }
+.level-range { font-size: 0.78rem; color: var(--ink-3); margin-top: 0.15rem; }
+.level.low .level-name { color: var(--ink-3); }
+.level.mid .level-name { color: var(--amber); }
+.level.high .level-name { color: var(--brand-2); }
+
+/* ---------- 13. Fuentes ---------- */
+.credential {
+  background: var(--surface); border: 1px solid var(--line);
+  border-left: 3px solid var(--brand); border-radius: var(--r-md);
+  padding: 1.45rem 1.55rem; box-shadow: var(--sh-1); margin-bottom: 1.25rem;
+}
+.credential h3 { margin-bottom: 0.55rem; }
+.credential p { font-size: 0.92rem; color: var(--ink-2); line-height: 1.7; }
+.credential p + p { margin-top: 0.65rem; }
+.credential strong { color: var(--ink); }
+
+.source-list {
+  list-style: none; background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--r-md); overflow: hidden; box-shadow: var(--sh-xs);
+}
+.source-list li {
+  padding: 1.15rem 1.4rem; border-bottom: 1px solid var(--line-2);
+  font-size: 0.88rem; color: var(--ink-3); line-height: 1.6;
+}
+.source-list li:last-child { border-bottom: none; }
+.source-list li:hover { background: var(--surface-2); }
+.source-list strong {
+  display: block; font-family: var(--f-serif); font-size: 0.98rem; font-weight: 600;
+  color: var(--ink); margin: 0.3rem 0 0.25rem;
+}
+.source-list a { color: var(--brand); word-break: break-word; font-size: 0.84rem; }
+.source-list a:hover { text-decoration: underline; }
+.source-tag {
+  display: inline-block; font-size: 0.62rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; background: var(--brand-3); color: var(--brand-2);
+  border: 1px solid var(--brand-line); padding: 0.16rem 0.55rem; border-radius: var(--r-pill);
+}
+
+/* ---------- 14. Cuestionario ---------- */
+.quiz-wrap { max-width: 720px; margin: 0 auto; padding: 2.5rem 1.5rem 3.5rem; }
+.quiz-top {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 1rem; margin-bottom: 1rem;
+}
+.quiz-module {
+  font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--brand);
+}
+.quiz-counter { font-family: var(--f-serif); font-size: 1.02rem; font-weight: 600; margin-top: 0.15rem; }
+.progress {
+  height: 5px; background: var(--line); border-radius: var(--r-pill);
+  overflow: hidden; margin-bottom: 1.5rem;
+}
+.progress-fill {
+  height: 100%; background: linear-gradient(90deg, var(--brand), #128e94);
+  width: 0; transition: width 0.35s var(--ease-out); border-radius: var(--r-pill);
+}
+
+.quiz-card {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--r-lg); padding: 1.85rem 1.8rem;
+  box-shadow: var(--sh-2); min-height: 220px;
+}
+.quiz-type {
+  display: inline-block; font-size: 0.64rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.09em;
+  color: var(--brand-2); background: var(--brand-3); border-radius: var(--r-pill);
+  padding: 0.2rem 0.6rem; margin-bottom: 0.95rem;
+}
+.quiz-question {
+  font-family: var(--f-serif); font-size: 1.18rem; font-weight: 600;
+  color: var(--ink); margin-bottom: 1.4rem; line-height: 1.45;
+}
+
+.options { display: grid; gap: 0.55rem; }
+.option-btn {
+  text-align: left; background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--r-sm); padding: 0.88rem 1.1rem; font-size: 0.93rem;
+  cursor: pointer; transition: all 0.15s var(--ease); color: var(--ink);
+}
+.option-btn:hover {
+  border-color: var(--brand-line); background: var(--surface-2);
+}
+.option-btn.is-selected {
+  border-color: var(--brand); background: var(--brand-3);
+  color: var(--brand-2); font-weight: 600;
+  box-shadow: 0 0 0 1px var(--brand);
+}
+
+.stimulus {
+  background: var(--surface-2); border: 1px solid var(--line);
+  border-radius: var(--r); padding: 1.35rem 1.15rem; text-align: center;
+  margin-bottom: 1.35rem; font-family: var(--f-serif); font-weight: 600;
+  font-size: clamp(1.15rem, 3.2vw, 1.55rem); letter-spacing: 0.08em; line-height: 1.6;
+}
+.scene {
+  font-size: 1.9rem; letter-spacing: 0.3rem; padding: 1.5rem 1.15rem;
+  background: var(--surface-2); border: 1px solid var(--line);
+  border-radius: var(--r); text-align: center; margin-bottom: 1.35rem;
+}
+
+.matrix-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.45rem;
+  max-width: 240px; margin: 0 auto 1.35rem;
+}
+.matrix-cell {
+  aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center;
+  background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--r-sm);
+  font-size: 1.3rem; font-family: var(--f-serif); font-weight: 600;
+}
+.matrix-cell.is-missing {
+  border-style: dashed; border-color: var(--brand-line);
+  color: var(--brand); background: var(--brand-3);
+}
+
+.coding-key {
+  display: flex; flex-wrap: wrap; gap: 0.45rem; justify-content: center; margin-bottom: 1.35rem;
+}
+.coding-key span {
+  background: var(--brand-3); border: 1px solid var(--brand-line); border-radius: var(--r-xs);
+  padding: 0.42rem 0.7rem; font-weight: 700; font-size: 0.95rem; color: var(--brand-2);
+}
+
+.mem-stage { text-align: center; }
+.mem-display {
+  font-family: var(--f-serif); font-size: clamp(1.45rem, 4.8vw, 2.1rem); font-weight: 600;
+  letter-spacing: 0.28em; padding: 1.4rem 1rem; background: var(--surface-2);
+  border: 1px solid var(--line); border-radius: var(--r); margin-bottom: 0.9rem; min-height: 74px;
+}
+.mem-hint { font-size: 0.84rem; color: var(--ink-3); margin-bottom: 0.9rem; }
+.mem-input {
+  width: 100%; max-width: 300px; margin: 0 auto; display: block; text-align: center;
+  font-family: var(--f-serif); font-size: 1.2rem; letter-spacing: 0.16em;
+  padding: 0.75rem 1rem; border: 1px solid var(--line); border-radius: var(--r-sm);
+  background: var(--surface); transition: border-color 0.15s;
+}
+.mem-input:focus { border-color: var(--brand); outline: none; box-shadow: 0 0 0 3px var(--brand-glow); }
+.countdown {
+  font-size: 0.8rem; color: var(--amber); font-weight: 600; margin-top: 0.55rem; min-height: 1.2em;
+}
+
+.thermo-wrap { text-align: center; }
+.thermo-value {
+  font-family: var(--f-serif); font-size: 2.3rem; font-weight: 600;
+  color: var(--brand); margin-bottom: 0.55rem; line-height: 1;
+}
+input[type=range] {
+  -webkit-appearance: none; appearance: none; width: 100%; max-width: 420px; height: 5px;
+  background: linear-gradient(90deg, var(--brand-3), var(--brand));
+  border-radius: var(--r-pill); outline: none; margin: 0 auto; display: block;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 24px; height: 24px; border-radius: 50%; background: #fff;
+  border: 3px solid var(--brand); cursor: pointer; box-shadow: var(--sh-2);
+}
+input[type=range]::-moz-range-thumb {
+  width: 20px; height: 20px; border-radius: 50%; background: #fff;
+  border: 3px solid var(--brand); cursor: pointer;
+}
+.thermo-scale {
+  display: flex; justify-content: space-between; max-width: 420px;
+  margin: 0.55rem auto 0; font-size: 0.74rem; color: var(--ink-4);
+}
+
+.open-area {
+  width: 100%; min-height: 125px; padding: 0.9rem 1.05rem; border: 1px solid var(--line);
+  border-radius: var(--r-sm); font-size: 0.93rem; resize: vertical;
+  background: var(--surface); line-height: 1.6; transition: border-color 0.15s;
+}
+.open-area:focus {
+  border-color: var(--brand); outline: none; box-shadow: 0 0 0 3px var(--brand-glow);
+}
+
+.color-btns { display: grid; grid-template-columns: repeat(auto-fit, minmax(105px, 1fr)); gap: 0.55rem; }
+.stroop-word {
+  font-family: var(--f-serif); font-weight: 600; font-size: clamp(1.9rem, 6.5vw, 2.85rem);
+  text-align: center; letter-spacing: 0.08em; margin-bottom: 1.35rem;
+}
+.search-grid {
+  display: grid; grid-template-columns: repeat(8, 1fr); gap: 0.2rem; margin-bottom: 1.35rem;
+}
+.search-cell {
+  aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center;
+  background: var(--surface-2); border: 1px solid var(--line-2); border-radius: 5px; font-size: 0.92rem;
+}
+.num-btns { display: grid; grid-template-columns: repeat(auto-fit, minmax(68px, 1fr)); gap: 0.5rem; }
+
+.quiz-nav {
+  display: flex; justify-content: space-between; gap: 0.7rem; margin-top: 1.4rem;
+}
+.kbd-hint {
+  text-align: center; font-size: 0.76rem; color: var(--ink-4); margin-top: 1rem;
+}
+.kbd {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 4px;
+  padding: 0.05rem 0.35rem; font-size: 0.74rem; font-family: var(--f-sans);
+  box-shadow: var(--sh-xs);
+}
+
+/* ---------- 15. Resultados ---------- */
+.results-wrap { max-width: 760px; margin: 0 auto; padding: 2.75rem 1.5rem 3.5rem; }
+.result-card {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--r-xl); padding: 2.15rem 2rem;
+  box-shadow: var(--sh-2); text-align: center;
+}
+.result-score {
+  font-family: var(--f-serif); font-size: clamp(2.9rem, 9.5vw, 4.2rem);
+  font-weight: 600; line-height: 1; color: var(--brand); margin: 0.85rem 0 0.25rem;
+}
+.result-sub { font-size: 0.88rem; color: var(--ink-3); }
+.result-scale { font-size: 0.78rem; color: var(--ink-4); margin-top: 0.2rem; }
+
+.level-chip {
+  display: inline-block; padding: 0.3rem 0.85rem; border-radius: var(--r-pill);
+  font-size: 0.76rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+  margin-top: 0.5rem;
+}
+.chip-low { background: var(--brand-3); color: var(--brand-2); }
+.chip-mid { background: #fef3c7; color: #92400e; }
+.chip-high { background: #fee2e2; color: #991b1b; }
+
+.bar {
+  height: 8px; background: var(--line); border-radius: var(--r-pill);
+  overflow: hidden; margin: 1.4rem 0 0.45rem;
+}
+.bar-fill { height: 100%; border-radius: var(--r-pill); transition: width 0.5s var(--ease-out); }
+.bar-low { background: var(--ink-4); }
+.bar-mid { background: #d97706; }
+.bar-high { background: var(--brand); }
+
+.profile-row { margin-bottom: 1.3rem; text-align: left; }
+.profile-head {
+  display: flex; justify-content: space-between; gap: 1rem;
+  font-size: 0.88rem; font-weight: 600; margin-bottom: 0.4rem;
+}
+.profile-bar {
+  height: 8px; background: var(--line); border-radius: var(--r-pill); overflow: hidden;
+}
+.profile-fill { height: 100%; border-radius: var(--r-pill); }
+.profile-note { font-size: 0.76rem; color: var(--ink-4); margin-top: 0.25rem; }
+
+.subtests {
+  width: 100%; border-collapse: collapse; font-size: 0.86rem;
+  margin: 1.4rem 0; text-align: left;
+}
+.subtests th {
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-4);
+  font-weight: 700; padding: 0.55rem 0.65rem; border-bottom: 1px solid var(--line); text-align: left;
+}
+.subtests td {
+  padding: 0.6rem 0.65rem; border-bottom: 1px solid var(--line-2); color: var(--ink-2);
+}
+.subtests td:last-child, .subtests th:last-child { text-align: right; white-space: nowrap; }
+.subtests tr:last-child td { border-bottom: none; font-weight: 600; color: var(--ink); }
+.subtests .dot {
+  display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+  margin-right: 0.4rem; vertical-align: middle;
+}
+
+.result-block {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--r-md); padding: 1.55rem 1.65rem;
+  margin-top: 1.25rem; text-align: left; box-shadow: var(--sh-xs);
+}
+.result-block h3 { margin-bottom: 0.65rem; }
+.result-block p { font-size: 0.92rem; line-height: 1.7; }
+.result-block p + p { margin-top: 0.65rem; }
+.result-block ul { list-style: none; display: grid; gap: 0.65rem; margin-top: 0.35rem; }
+.result-block li {
+  position: relative; padding-left: 1.55rem; font-size: 0.9rem;
+  color: var(--ink-2); line-height: 1.6;
+}
+.result-block li::before {
+  content: ""; position: absolute; left: 0; top: 0.55em;
+  width: 7px; height: 7px; border-radius: 2.5px; background: var(--brand);
+}
+.result-block li strong { color: var(--ink); }
+.step-card {
+  border-left: 3px solid var(--brand); background: var(--surface-2);
+  border-radius: 0 var(--r-sm) var(--r-sm) 0; padding: 0.95rem 1.15rem; margin-bottom: 0.65rem;
+}
+.step-card strong {
+  display: block; font-family: var(--f-serif); font-size: 0.98rem; margin-bottom: 0.15rem;
+}
+.step-card span { font-size: 0.86rem; color: var(--ink-3); line-height: 1.55; }
+
+.cta-row {
+  display: flex; flex-wrap: wrap; gap: 0.65rem; justify-content: center; margin-top: 1.5rem;
+}
+.tiny {
+  font-size: 0.78rem; color: var(--ink-4); text-align: center;
+  margin-top: 1.4rem; line-height: 1.6;
+}
+
+/* ---------- 16. Comentarios ---------- */
+.comments-wrap { max-width: 720px; margin: 0 auto; padding: 2.75rem 1.5rem 3.5rem; }
+.comment-form {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--r-md); padding: 1.4rem; box-shadow: var(--sh-1); margin-bottom: 1.5rem;
+}
+.field {
+  width: 100%; padding: 0.78rem 1rem; border: 1px solid var(--line);
+  border-radius: var(--r-sm); font-size: 0.92rem; background: var(--surface);
+  margin-bottom: 0.7rem; transition: border-color 0.15s;
+}
+.field:focus {
+  border-color: var(--brand); outline: none; box-shadow: 0 0 0 3px var(--brand-glow);
+}
+textarea.field { min-height: 115px; resize: vertical; line-height: 1.6; }
+.comments-list { display: grid; gap: 0.7rem; }
+.comment-item {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--r-sm); padding: 1.1rem 1.2rem;
+}
+.comment-meta {
+  display: flex; justify-content: space-between; gap: 1rem;
+  font-size: 0.74rem; color: var(--ink-4); margin-bottom: 0.4rem;
+}
+.comment-author { font-weight: 700; color: var(--ink-2); }
+.comment-body { font-size: 0.92rem; color: var(--ink-2); white-space: pre-wrap; line-height: 1.6; }
+.no-comments {
+  text-align: center; color: var(--ink-4); font-size: 0.88rem; padding: 2rem 1rem;
+  background: var(--surface-2); border: 1px dashed var(--line); border-radius: var(--r);
+}
+
+/* ---------- 17. Pie ---------- */
+.site-footer {
+  background: var(--surface); border-top: 1px solid var(--line);
+  padding: 3rem 0 2.25rem; margin-top: 3.5rem;
+}
+.footer-grid {
+  display: grid; grid-template-columns: 1.4fr 1fr; gap: 2.5rem; margin-bottom: 2rem;
+}
+.footer-brand { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.85rem; }
+.footer-title { font-family: var(--f-serif); font-size: 1.08rem; font-weight: 600; }
+.footer-grid p { font-size: 0.86rem; color: var(--ink-3); line-height: 1.65; }
+.footer-links { display: grid; gap: 0.45rem; align-content: start; }
+.footer-links a {
+  font-size: 0.86rem; color: var(--ink-2); text-decoration: none; cursor: pointer;
+}
+.footer-links a:hover { color: var(--brand); text-decoration: underline; }
+.footer-heading {
+  font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--ink-4); margin-bottom: 0.35rem;
+}
+.byline {
+  border-top: 1px solid var(--line); padding-top: 1.5rem;
+  font-size: 0.82rem; color: var(--ink-3); max-width: 800px; line-height: 1.7;
+}
+.byline strong { color: var(--ink); }
+.byline a { color: var(--brand); font-weight: 600; text-decoration: none; }
+.byline a:hover { text-decoration: underline; }
+
+.profile-band { font-size: 0.8rem; margin-top: 0.35rem; font-weight: 600; }
+.profile-fill.band-low { background: #94a3b8; }
+.profile-fill.band-mid { background: #d97706; }
+.profile-fill.band-high { background: var(--brand); }
+.profile-band.band-low { color: #64748b; }
+.profile-band.band-mid { color: #b45309; }
+.profile-band.band-high { color: var(--brand-2); }
+
+/* ---------- 18. Responsive ---------- */
+@media (max-width: 820px) {
+  .footer-grid { grid-template-columns: 1fr; gap: 1.75rem; }
+  .header-inner { min-height: 58px; }
+  .brand-text span { display: none; }
+}
+@media (max-width: 640px) {
+  .site-nav { gap: 0.05rem; }
+  .site-nav a { padding: 0.32rem 0.48rem; font-size: 0.8rem; }
+  .hero { padding: 3.25rem 0 2.35rem; }
+  .section { padding: 2.6rem 0; }
+  .quiz-card { padding: 1.35rem 1.15rem; }
+  .result-card { padding: 1.55rem 1.2rem; }
+  .search-grid { grid-template-columns: repeat(6, 1fr); }
+  .notice { flex-direction: column; gap: 0.75rem; }
+  body { font-size: 15px; }
+}
+@media (max-width: 420px) {
+  .site-nav a:nth-child(2) { display: none; }
+  .modules-grid { grid-template-columns: 1fr; }
+}
+
+/* ---------- 19. Impresión ---------- */
+@media print {
+  body { background: #fff; font-size: 11.5pt; }
+  .site-header, .site-nav, .quiz-nav, .cta-row, .kbd-hint, .actions, .btn { display: none !important; }
+  .view { display: none; }
+  .view.is-active { display: block; }
+  .result-card, .result-block, .subtests {
+    box-shadow: none; border-color: #cbd5e1; page-break-inside: avoid;
+  }
+  .section-alt, .site-footer { background: #fff; }
+  a { color: #000; text-decoration: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto; }
+}
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main">Saltar al contenido principal</a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <button class="brand" onclick="goHome()" aria-label="Ir al inicio">
+      <span class="brand-mark">◈</span>
+      <span class="brand-text">
+        <strong>Mente Clara</strong>
+        <span>Autoevaluación orientativa</span>
+      </span>
+    </button>
+    <nav class="site-nav" aria-label="Navegación principal">
+      <a onclick="goHome()">Inicio</a>
+      <a onclick="scrollToId('pasos')">Cómo funciona</a>
+      <a onclick="scrollToId('modulos')">Módulos</a>
+      <a onclick="scrollToId('fuentes')">Fuentes</a>
+      <a onclick="showView('comments')">Comentarios</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ===================== INICIO ===================== -->
+  <div id="view-home" class="view is-active">
+
+    <section class="hero">
+      <div class="wrap">
+        <span class="eyebrow">Herramienta orientativa · No diagnostica</span>
+        <h1>Mente Clara</h1>
+        <p class="lead">
+          Un espacio tranquilo para revisar, con calma y sin juicios, cómo estás y qué te está pasando.
+          Ocho módulos: depresión, autismo, ansiedad, TDAH, acoso, abuso, cognición y razonamiento.
+          <strong>Todo orientativo, nunca un diagnóstico.</strong>
+        </p>
+        <div class="actions">
+          <a class="btn btn-primary" onclick="scrollToId('modulos')">Elegir un módulo</a>
+          <a class="btn btn-secondary" onclick="scrollToId('pasos')">Ver cómo funciona</a>
+          <a class="btn btn-ghost" onclick="scrollToId('fuentes')">Ver fuentes</a>
+        </div>
+        <div class="stats">
+          <div class="stat"><div class="stat-value">8</div><div class="stat-label">módulos</div></div>
+          <div class="stat"><div class="stat-value">320</div><div class="stat-label">reactivos</div></div>
+          <div class="stat"><div class="stat-value">40</div><div class="stat-label">por módulo</div></div>
+          <div class="stat"><div class="stat-value">15</div><div class="stat-label">fuentes citadas</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="wrap">
+        <div class="notice">
+          <div class="notice-icon" aria-hidden="true">i</div>
+          <div>
+            <h3>Antes de empezar</h3>
+            <p>
+              Esta herramienta <strong>no es un diagnóstico</strong> y <strong>no reemplaza a un profesional</strong>.
+              Es un ejercicio de análisis y orientación: te ayuda a poner en palabras lo que sientes, a mirar con lupa
+              algunas funciones de tu mente y a decidir si vale la pena consultar con alguien que sí está preparado
+              para evaluarte. Todo se procesa dentro de tu celular o computadora: <strong>nada se envía a un servidor</strong>.
+            </p>
+            <p>
+              <strong>El paso más importante siempre es visitar a un especialista titulado.</strong> Un psicólogo, un
+              psiquiatra o un médico pueden valorar tu caso con instrumentos completos, historia clínica y baremos
+              poblacionales. Un cuestionario en línea no puede hacer eso, ni siquiera cuando sus preguntas se inspiran
+              en instrumentos serios.
+            </p>
+          </div>
+        </div>
+        <div class="callout">
+          <div class="callout-title"><span aria-hidden="true">⚠</span> Si estás en riesgo</div>
+          <p>
+            Si tienes pensamientos de hacerte daño o de dañar a alguien, o si estás viviendo violencia,
+            no uses esta página como primer paso: acude a urgencias o a los servicios de emergencia de tu localidad,
+            o habla hoy mismo con una persona de confianza.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="pasos">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="section-label">Proceso</div>
+          <h2>Cómo funciona</h2>
+          <p>Cuatro pasos sencillos. Tú marcas el ritmo, y puedes hacer solo el módulo que te interese.</p>
+        </div>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><h3>Elige un módulo</h3><p>Son ocho. Ninguno es obligatorio y puedes hacerlos en el orden que quieras.</p></div>
+          <div class="step"><div class="step-num">2</div><h3>Contesta los reactivos</h3><p>40 por módulo, con preguntas, escenas, memoria y tareas de atención.</p></div>
+          <div class="step"><div class="step-num">3</div><h3>Lee tus resultados</h3><p>Un resultado orientativo, con su fuente y sus límites explicados.</p></div>
+          <div class="step"><div class="step-num">4</div><h3>Guarda o comparte</h3><p>Puedes imprimirlo en PDF o compartirlo, por si decides llevarlo a consulta.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="modulos">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="section-label">Contenido</div>
+          <h2>Elige un módulo</h2>
+          <p>Cada módulo tiene 40 reactivos y su propia hoja de resultados. Seis exploran síntomas; dos exploran cómo piensas.</p>
+        </div>
+        <div class="modules-grid" id="modules-grid"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="section-label">Diseño</div>
+          <h2>Los nueve tipos de prueba</h2>
+          <p>Cada módulo combina distintas formas de explorar cómo funciona tu mente.</p>
+        </div>
+        <div class="tests-list">
+          <div class="test-item"><div class="test-num">1</div><div><strong>Preguntas de frecuencia</strong><span>Nunca, a veces, frecuentemente, siempre.</span></div></div>
+          <div class="test-item"><div class="test-num">2</div><div><strong>Interpretación de escenas</strong><span>Escenas y expresiones para leer señales sociales.</span></div></div>
+          <div class="test-item"><div class="test-num">3</div><div><strong>Memoria de trabajo</strong><span>Se muestra una serie unos segundos y se oculta.</span></div></div>
+          <div class="test-item"><div class="test-num">4</div><div><strong>Búsqueda visual</strong><span>Contar un símbolo dentro de un tablero.</span></div></div>
+          <div class="test-item"><div class="test-num">5</div><div><strong>Inhibición de color</strong><span>Nombrar el color de la tinta, no la palabra escrita.</span></div></div>
+          <div class="test-item"><div class="test-num">6</div><div><strong>Termómetros de 0 a 10</strong><span>Para medir intensidad e impacto en tu vida diaria.</span></div></div>
+          <div class="test-item"><div class="test-num">7</div><div><strong>Pregunta abierta</strong><span>Para que lo cuentes con tus propias palabras.</span></div></div>
+          <div class="test-item"><div class="test-num">8</div><div><strong>Series, analogías y matrices</strong><span>Razonamiento fluido al estilo de las baterías de inteligencia.</span></div></div>
+          <div class="test-item"><div class="test-num">9</div><div><strong>Claves, letras y números</strong><span>Velocidad de procesamiento y memoria de trabajo.</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="calificacion">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="section-label">Resultados</div>
+          <h2>Cómo se califica</h2>
+          <p>Todo el cálculo se hace en tu dispositivo. Hay dos formas de puntuar, según el tipo de módulo.</p>
+        </div>
+        <div class="score-rules">
+          <ul>
+            <li><strong>Módulos de síntomas.</strong> Nunca = 0 · A veces = 1 · Frecuentemente = 2 · Siempre = 3. En memoria, atención e imágenes, fallar suma puntos porque indica dificultad.</li>
+            <li><strong>La pregunta abierta nunca suma puntos</strong>: sirve para que lo lleves a consulta con tus propias palabras.</li>
+            <li><strong>Módulo de cognición.</strong> Se cuenta cuántos reactivos resolviste bien por dominio. Más aciertos es mejor, y aun así no se convierte en un número de CI.</li>
+            <li><strong>Módulo de razonamiento.</strong> Se cuenta el puntaje directo sobre 28 reactivos y se convierte en una estimación en la escala de media 100 y desviación estándar 15. Se explica paso a paso en su hoja de resultados.</li>
+          </ul>
+          <div class="levels">
+            <div class="level low"><div class="level-name">Bajo</div><div class="level-range">menos de 35 %</div></div>
+            <div class="level mid"><div class="level-name">Moderado</div><div class="level-range">35 % a 64 %</div></div>
+            <div class="level high"><div class="level-name">Elevado</div><div class="level-range">65 % o más</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="fuentes">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="section-label">Transparencia</div>
+          <h2>Fuentes y créditos</h2>
+          <p>De dónde viene cada módulo, quién lo hizo y qué límites tiene esta herramienta.</p>
+        </div>
+
+        <div class="credential">
+          <h3>Qué es y qué no es Mente Clara</h3>
+          <p>Mente Clara es una <strong>herramienta orientativa y educativa</strong>. No es un test psicométrico validado, no está baremada y <strong>no entrega diagnósticos</strong>. Ningún resultado de esta página equivale a una evaluación clínica.</p>
+          <p>Los reactivos fueron escritos para este proyecto siguiendo la lógica de instrumentos reconocidos, pero <strong>no son las versiones oficiales</strong> de esos instrumentos. Los tests originales tienen derechos de autor y condiciones de uso propias; aquí solo se cita su marco de referencia.</p>
+          <p><strong>Lo mejor, siempre, es visitar a una especialista o un especialista titulado.</strong> Un profesional puede aplicar instrumentos completos, integrar tu historia y distinguir un cuadro clínico de algo transitorio. Ante cualquier crisis o riesgo, acude a los servicios de emergencia de tu localidad.</p>
+        </div>
+
+        <div class="credential">
+          <h3>Créditos y autoría</h3>
+          <p>Esta herramienta fue creada por <strong>Jorge Barba</strong>, autor del código, del diseño y de la redacción de los reactivos adaptados.</p>
+          <p><strong>Jorge Barba no es profesional de la salud mental.</strong> No es psicólogo, ni psiquiatra, ni médico, y no ejerce ninguna profesión clínica. Todo el contenido se apoya en estudios e instrumentos publicados por investigadores y profesionales que sí se prepararon específicamente para esto, y cuyas referencias aparecen abajo para que puedas verificarlas por tu cuenta.</p>
+          <p>Si eres profesional de la salud mental o de la psicometría y detectas un error de interpretación o una redacción mejorable, tu corrección es bienvenida: la idea es que esta herramienta oriente con cuidado y derive a atención real.</p>
+        </div>
+
+        <ul class="source-list">
+          <li><span class="source-tag">Depresión</span><strong>PHQ-9 · Kroenke, Spitzer y Williams (2001)</strong>Kroenke K, Spitzer RL, Williams JBW. The PHQ-9: validity of a brief depression severity measure. Journal of General Internal Medicine, 16(9), 606-613. <a href="https://pubmed.ncbi.nlm.nih.gov/11556941/" target="_blank" rel="noopener">pubmed.ncbi.nlm.nih.gov/11556941</a></li>
+          <li><span class="source-tag">Ansiedad</span><strong>GAD-7 · Spitzer, Kroenke, Williams y Löwe (2006)</strong>Spitzer RL, Kroenke K, Williams JBW, Löwe B. A brief measure for assessing generalized anxiety disorder: the GAD-7. Archives of Internal Medicine, 166(10), 1092-1097. <a href="https://pubmed.ncbi.nlm.nih.gov/16717171/" target="_blank" rel="noopener">pubmed.ncbi.nlm.nih.gov/16717171</a></li>
+          <li><span class="source-tag">Autismo</span><strong>AQ-10 · Allison, Auyeung y Baron-Cohen (2012)</strong>Allison C, Auyeung B, Baron-Cohen S. Toward brief red flags for autism screening: the Short Autism Spectrum Quotient and the Short Quantitative Checklist for Autism in Toddlers. Journal of the American Academy of Child and Adolescent Psychiatry, 51(2), 202-212. <a href="https://pubmed.ncbi.nlm.nih.gov/22265366/" target="_blank" rel="noopener">pubmed.ncbi.nlm.nih.gov/22265366</a></li>
+          <li><span class="source-tag">TDAH</span><strong>ASRS v1.1 · Kessler y colaboradores (2005)</strong>Kessler RC, Adler L, Ames M, y colaboradores. The World Health Organization Adult ADHD Self-Report Scale (ASRS). Psychological Medicine, 35(2), 245-256. <a href="https://pubmed.ncbi.nlm.nih.gov/15841682/" target="_blank" rel="noopener">pubmed.ncbi.nlm.nih.gov/15841682</a></li>
+          <li><span class="source-tag">Estrés</span><strong>PSS-10 · Cohen, Kamarck y Mermelstein (1983)</strong>Cohen S, Kamarck T, Mermelstein R. A global measure of perceived stress. Journal of Health and Social Behavior, 24(4), 385-396. <a href="https://pubmed.ncbi.nlm.nih.gov/6668417/" target="_blank" rel="noopener">pubmed.ncbi.nlm.nih.gov/6668417</a></li>
+          <li><span class="source-tag">Sueño</span><strong>ISI · Morin y colaboradores (2011)</strong>Morin CM, Belleville G, Bélanger L, Ivers H. The Insomnia Severity Index: psychometric indicators to detect insomnia cases and evaluate treatment response. Sleep, 34(5), 601-608. <a href="https://pubmed.ncbi.nlm.nih.gov/21532953/" target="_blank" rel="noopener">pubmed.ncbi.nlm.nih.gov/21532953</a></li>
+          <li><span class="source-tag">Trauma</span><strong>PC-PTSD-5 · Prins y colaboradores (2016)</strong>Prins A, Bovin MJ, Kimerling R, y colaboradores. The Primary Care PTSD Screen for DSM-5 (PC-PTSD-5). Journal of General Internal Medicine, 31(10), 1206-1211. <a href="https://pubmed.ncbi.nlm.nih.gov/27170304/" target="_blank" rel="noopener">pubmed.ncbi.nlm.nih.gov/27170304</a></li>
+          <li><span class="source-tag">Consumo de alcohol</span><strong>AUDIT · Saunders y colaboradores (1993)</strong>Saunders JB, Aasland OG, Babor TF, de la Fuente JR, Grant M. Development of the Alcohol Use Disorders Identification Test (AUDIT): WHO collaborative project. Addiction, 88(6), 791-804. <a href="https://pubmed.ncbi.nlm.nih.gov/8329970/" target="_blank" rel="noopener">pubmed.ncbi.nlm.nih.gov/8329970</a></li>
+          <li><span class="source-tag">Acoso</span><strong>Definición uniforme de acoso · Gladden y colaboradores (2014)</strong>Gladden RM, Vivolo-Kantor AM, Hamburger ME, Lumpkin CD. Bullying surveillance among youths: uniform definitions for public health and recommended data elements. Centros para el Control y la Prevención de Enfermedades y Departamento de Educación de Estados Unidos. <a href="https://stacks.cdc.gov/view/cdc/21596" target="_blank" rel="noopener">stacks.cdc.gov/view/cdc/21596</a></li>
+          <li><span class="source-tag">Abuso y experiencias adversas</span><strong>Estudio ACE · Felitti y colaboradores (1998)</strong>Felitti VJ, Anda RF, Nordenberg D, y colaboradores. Relationship of childhood abuse and household dysfunction to many of the leading causes of death in adults: the Adverse Childhood Experiences (ACE) Study. American Journal of Preventive Medicine, 14(4), 245-258. <a href="https://pubmed.ncbi.nlm.nih.gov/9635069/" target="_blank" rel="noopener">pubmed.ncbi.nlm.nih.gov/9635069</a></li>
+          <li><span class="source-tag">Cognición</span><strong>Teoría CHC de las habilidades cognitivas · Schneider y McGrew (2018)</strong>Schneider WJ, McGrew KS. The Cattell-Horn-Carroll theory of cognitive abilities. En Contemporary Intellectual Assessment: Theories, Tests, and Issues, 4.ª edición, Guilford Press. <a href="https://onlinelibrary.wiley.com/doi/pdf/10.1002/9781118660584.ese0431" target="_blank" rel="noopener">onlinelibrary.wiley.com</a></li>
+          <li><span class="source-tag">Cognición</span><strong>Memoria de trabajo e inteligencia fluida · Conway y colaboradores (2002)</strong>Conway ARA, Cowan N, Bunting MF, Therriault DJ, Minkoff SRB. A latent variable analysis of working memory capacity, short-term memory capacity, processing speed, and general fluid intelligence. Intelligence, 30(2), 163-183. <a href="https://memory.psych.missouri.edu/assets/doc/articles/2002/conway-et-al-intelligence-2002.pdf" target="_blank" rel="noopener">memory.psych.missouri.edu</a></li>
+          <li><span class="source-tag">Cognición</span><strong>Matrices en dispositivos móviles · Pahor y colaboradores (2019)</strong>Pahor A, Stavropoulos T, Jaeggi SM, Seitz AR. Validation of a matrix reasoning task for mobile devices. Behavior Research Methods, 51, 2256-2267. <a href="https://link.springer.com/article/10.3758/s13428-018-1152-2" target="_blank" rel="noopener">link.springer.com</a></li>
+          <li><span class="source-tag">Inteligencia</span><strong>WAIS-IV · Wechsler (2008) y Matrices Progresivas · Raven (1938)</strong>Wechsler D. Wechsler Adult Intelligence Scale, Fourth Edition: Technical and Interpretive Manual. Pearson, 2008. Y Raven JC. Progressive Matrices: A perceptual test of intelligence, 1938. Ambos son los referentes de las subpruebas de matrices, series, dígitos, claves y letras y números que inspiran esta batería orientativa. <a href="https://www.pearsonassessments.com/en-us/Store/Professional-Assessments/Cognition-%26-Neuro/Wechsler-Adult-Intelligence-Scale-%7C-Fourth-Edition/p/100000392" target="_blank" rel="noopener">pearsonassessments.com</a></li>
+          <li><span class="source-tag">Nota metodológica</span><strong>Por qué esta página no entrega un CI baremado · Carroll (1993)</strong>La escala de CI tiene media 100 y desviación estándar 15, y su estructura jerárquica de habilidades se documenta en Carroll JB. Human Cognitive Abilities: A Survey of Factor-Analytic Studies. Cambridge University Press, 1993. Un CI válido exige instrumentos con derechos de autor, aplicación estandarizada y baremos por edad, escolaridad y país. Sin esos baremos, la conversión de aciertos a percentil es solo una aproximación descriptiva, y ningún resultado de esta página debe usarse como diagnóstico ni como etiqueta. <a href="https://pubmed.ncbi.nlm.nih.gov/27170304/" target="_blank" rel="noopener">Referencia sobre los límites de los cuestionarios breves</a></li>
+        </ul>
+
+        <div class="credential">
+          <h3>Cómo leer tus resultados</h3>
+          <p>Un porcentaje alto significa que en este ejercicio marcaste más indicadores de dificultad. Un porcentaje bajo significa que marcaste menos. <strong>No es un veredicto sobre ti</strong>: el sueño, el estrés del día, el cansancio o el contexto cambian las respuestas.</p>
+          <p>En el módulo de razonamiento, además, el número que ves es una <strong>estimación</strong> construida sobre muy pocos reactivos y sin baremos. Úsalo como una señal para conversar, nunca como una etiqueta.</p>
+          <p>Usa todo esto como material para llevar a consulta si decides ir. Un profesional sabrá leerlo mejor que cualquier página.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===================== CUESTIONARIO ===================== -->
+  <div id="view-quiz" class="view">
+    <div class="quiz-wrap">
+      <div class="quiz-top">
+        <div>
+          <div class="quiz-module" id="quiz-module-name"></div>
+          <div class="quiz-counter" id="quiz-counter"></div>
+        </div>
+        <button class="btn btn-ghost" onclick="confirmExitQuiz()">Salir</button>
+      </div>
+      <div class="progress"><div class="progress-fill" id="quiz-progress"></div></div>
+      <div class="quiz-card" id="quiz-card"></div>
+      <div class="quiz-nav">
+        <button class="btn btn-secondary" id="btn-prev" onclick="prevQuestion()" disabled>Anterior</button>
+        <button class="btn btn-primary" id="btn-next" onclick="nextQuestion()" disabled>Siguiente</button>
+      </div>
+      <p class="kbd-hint">Atajos: <span class="kbd">1</span> a <span class="kbd">4</span> para elegir opción · <span class="kbd">←</span> <span class="kbd">→</span> para moverte</p>
+    </div>
+  </div>
+
+  <!-- ===================== RESULTADOS ===================== -->
+  <div id="view-results" class="view">
+    <div class="results-wrap" id="results-content"></div>
+  </div>
+
+  <!-- ===================== COMENTARIOS ===================== -->
+  <div id="view-comments" class="view">
+    <div class="comments-wrap">
+      <div class="section-head">
+        <div class="section-label">Comunidad</div>
+        <h2>Comentarios</h2>
+        <p>Comparte cómo te fue o cualquier reflexión. Los comentarios se guardan solo en este navegador: no se envían a ningún servidor.</p>
+      </div>
+      <div class="comment-form">
+        <input type="text" class="field" id="comment-name" placeholder="Tu nombre o apodo (opcional)" maxlength="40">
+        <textarea class="field" id="comment-text" placeholder="Escribe tu comentario..." maxlength="800"></textarea>
+        <button class="btn btn-primary" onclick="addComment()">Publicar comentario</button>
+      </div>
+      <div class="comments-list" id="comments-list"></div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <span class="brand-mark" aria-hidden="true">◈</span>
+          <span class="footer-title">Mente Clara</span>
+        </div>
+        <p>Herramienta orientativa de autoevaluación. Ocho módulos, 320 reactivos y todas las fuentes a la vista.</p>
+        <p style="margin-top:0.7rem;">Todo se procesa localmente: nada se envía a un servidor.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-heading">Enlaces</div>
+        <a href="https://barba-rasta.github.io/mente-clara/" target="_blank" rel="noopener">barba-rasta.github.io/mente-clara</a>
+        <a onclick="scrollToId('modulos')">Módulos</a>
+        <a onclick="scrollToId('fuentes')">Fuentes y créditos</a>
+        <a onclick="scrollToId('calificacion')">Cómo se califica</a>
+        <a onclick="showView('comments')">Comentarios</a>
+      </div>
+    </div>
+    <div class="byline">
+      Creado por <strong>Jorge Barba</strong>. Jorge Barba no es profesional de la salud mental ni de la psicología:
+      no es psicólogo, ni psiquiatra, ni médico. Esta herramienta se apoya en estudios e instrumentos publicados por
+      investigadores y profesionales con formación específica en cada tema. No sustituye una evaluación, un diagnóstico
+      ni un tratamiento: <strong>lo mejor siempre es visitar a un profesional titulado</strong> y, ante una crisis,
+      acudir a los servicios de emergencia.
+    </div>
+  </div>
+</footer>
+
+
+<script>
+    const MODULES = {
+      depresion: {
+        id: 'depresion', name: 'Depresión', icon: '🌧', iconClass: 'icon-dep',
+        desc: 'Estado de ánimo, energía, interés, sueño, apetito y pensamientos difíciles.',
+        items: [
+          { type: 'freq', q: 'Durante las últimas dos semanas, ¿con qué frecuencia te has sentido poco interesado/a o con poco placer en hacer las cosas?' },
+          { type: 'freq', q: '¿Con qué frecuencia te has sentido decaído/a, deprimido/a o sin esperanzas?' },
+          { type: 'freq', q: '¿Has tenido problemas para dormir o has dormido demasiado?' },
+          { type: 'freq', q: '¿Te has sentido cansado/a o con poca energía?' },
+          { type: 'freq', q: '¿Has tenido poco apetito o has comido en exceso?' },
+          { type: 'freq', q: '¿Te has sentido mal contigo mismo/a o que eres un fracaso?' },
+          { type: 'freq', q: '¿Has tenido dificultad para concentrarte en cosas como leer o ver televisión?' },
+          { type: 'freq', q: '¿Te has movido o hablado tan lento que otras personas lo notaron, o al contrario, has estado inquieto/a?' },
+          { type: 'freq', q: '¿Has pensado que estarías mejor muerto/a o te has hecho daño de alguna manera?' },
+          { type: 'thermo', q: 'En una escala de 0 a 10, ¿qué tan intensa ha sido tu tristeza en la última semana?' },
+          { type: 'freq', q: '¿Te resulta difícil levantarte de la cama por la mañana?' },
+          { type: 'freq', q: '¿Has dejado de hacer actividades que antes te gustaban?' },
+          { type: 'freq', q: '¿Sientes que el futuro no tiene sentido?' },
+          { type: 'freq', q: '¿Lloras con facilidad o sin motivo aparente?' },
+          { type: 'freq', q: '¿Te sientes aislado/a de los demás aunque estés acompañado/a?' },
+          { type: 'scene', q: '¿Qué emoción predomina en esta escena?', scene: '😔 🛋️ 🌧️', options: ['Alegría', 'Tristeza / desánimo', 'Enojo', 'Calma'], correct: 1 },
+          { type: 'freq', q: '¿Has notado que te cuesta más de lo normal tomar decisiones simples?' },
+          { type: 'freq', q: '¿Sientes que tu cuerpo pesa más de lo normal?' },
+          { type: 'memory', q: 'Memoriza la secuencia. Luego escríbela.', sequence: '7 2 9 4 1' },
+          { type: 'freq', q: '¿Evitas contactar a amigos o familiares porque no tienes ganas?' },
+          { type: 'thermo', q: '¿Qué tanto impacta tu estado de ánimo en tu trabajo o estudios? (0 = nada, 10 = mucho)' },
+          { type: 'freq', q: '¿Te cuesta recordar cosas recientes (citas, tareas, conversaciones)?' },
+          { type: 'search', q: '¿Cuántas veces aparece el símbolo ★ en el tablero?', target: '★', count: 7 },
+          { type: 'freq', q: '¿Sientes culpa por cosas que no controlas?' },
+          { type: 'freq', q: '¿Has perdido interés en tu apariencia o aseo personal?' },
+          { type: 'stroop', q: 'Indica el COLOR de la tinta (no la palabra).', word: 'ROJO', color: 'azul' },
+          { type: 'freq', q: '¿Te sientes inútil la mayor parte del día?' },
+          { type: 'freq', q: '¿Tienes pensamientos negativos recurrentes que no puedes detener?' },
+          { type: 'scene', q: '¿Cómo describirías el estado emocional de esta persona?', scene: '😞 💭 🛏️', options: ['Motivada', 'Agotada / desanimada', 'Enojada', 'Curiosa'], correct: 1 },
+          { type: 'freq', q: '¿Has tenido periodos en los que no quieres salir de casa?' },
+          { type: 'thermo', q: '¿Qué tan esperanzado/a te sientes respecto al futuro? (0 = nada, 10 = mucho)', invert: true },
+          { type: 'freq', q: '¿Notas que el tiempo pasa muy lento cuando estás solo/a?' },
+          { type: 'memory', q: 'Memoriza la secuencia. Luego escríbela.', sequence: '3 8 1 6 5 2' },
+          { type: 'freq', q: '¿Te resulta difícil imaginar un futuro positivo?' },
+          { type: 'freq', q: '¿Has dejado de responder mensajes o llamadas?' },
+          { type: 'stroop', q: 'Indica el COLOR de la tinta (no la palabra).', word: 'VERDE', color: 'rojo' },
+          { type: 'freq', q: '¿Sientes que nada de lo que haces tiene valor?' },
+          { type: 'search', q: '¿Cuántas veces aparece el símbolo ● en el tablero?', target: '●', count: 5 },
+          { type: 'freq', q: '¿Has experimentado cambios notables en tu peso sin intentarlo?' },
+          { type: 'open', q: 'Con tus propias palabras, describe cómo te has sentido emocionalmente en las últimas dos semanas. (Esto no suma puntos; es para que lo lleves a consulta si quieres.)' }
+        ]
+      },
+      autismo: {
+        id: 'autismo', name: 'Autismo', icon: '🌀', iconClass: 'icon-aut',
+        desc: 'Comunicación social, patrones de conducta, sensibilidad sensorial e intereses intensos.',
+        items: [
+          { type: 'freq', q: '¿Prefieres hacer actividades solo/a en lugar de con otras personas?' },
+          { type: 'freq', q: '¿Te cuesta entender cuando alguien está bromeando o siendo sarcástico?' },
+          { type: 'freq', q: '¿Tienes intereses muy intensos o específicos que ocupan mucho de tu tiempo?' },
+          { type: 'freq', q: '¿Te molestan ciertos sonidos, luces, texturas o olores más que a la mayoría?' },
+          { type: 'freq', q: '¿Prefieres rutinas fijas y te incomoda cuando cambian de improviso?' },
+          { type: 'freq', q: '¿Te resulta difícil iniciar o mantener una conversación pequeña (small talk)?' },
+          { type: 'freq', q: '¿Notas detalles que otras personas suelen pasar por alto?' },
+          { type: 'freq', q: '¿Te cuesta interpretar el lenguaje corporal o las expresiones faciales?' },
+          { type: 'freq', q: '¿Repites movimientos o gestos cuando estás nervioso/a o concentrado/a?' },
+          { type: 'thermo', q: '¿Qué tan abrumado/a te sientes en ambientes ruidosos o con mucha gente? (0-10)' },
+          { type: 'freq', q: '¿Prefieres instrucciones claras y literales en lugar de ambiguas?' },
+          { type: 'freq', q: '¿Te resulta más fácil relacionarte con personas que comparten tus intereses específicos?' },
+          { type: 'freq', q: '¿Has sentido que “actuabas” para encajar en situaciones sociales?' },
+          { type: 'freq', q: '¿Te cuesta cambiar de actividad aunque sepas que deberías?' },
+          { type: 'scene', q: '¿Qué está pasando emocionalmente aquí?', scene: '😐 👥 💬', options: ['Alegría compartida', 'Posible confusión social', 'Enojo claro', 'Celebración'], correct: 1 },
+          { type: 'freq', q: '¿Te incomoda el contacto visual prolongado?' },
+          { type: 'freq', q: '¿Tienes una forma particular de organizar tus cosas o tu espacio?' },
+          { type: 'memory', q: 'Memoriza la secuencia. Luego escríbela.', sequence: 'A 4 K 9 M' },
+          { type: 'freq', q: '¿Te resulta agotador estar en reuniones sociales aunque las disfrutes un poco?' },
+          { type: 'thermo', q: '¿Qué tan importante es para ti mantener el control de tu entorno? (0-10)' },
+          { type: 'freq', q: '¿Notas patrones o sistemas donde otros no los ven?' },
+          { type: 'search', q: '¿Cuántas veces aparece el símbolo △ en el tablero?', target: '△', count: 6 },
+          { type: 'freq', q: '¿Te cuesta entender las “reglas no escritas” de un grupo?' },
+          { type: 'freq', q: '¿Prefieres comunicación por escrito que cara a cara en muchos contextos?' },
+          { type: 'stroop', q: 'Indica el COLOR de la tinta (no la palabra).', word: 'AZUL', color: 'verde' },
+          { type: 'freq', q: '¿Te sientes diferente a la mayoría de las personas de tu edad?' },
+          { type: 'freq', q: '¿Tienes sensibilidad a ciertas texturas de ropa o alimentos?' },
+          { type: 'scene', q: '¿Cuál es la lectura más probable de esta escena?', scene: '🫣 🎉 🔊', options: ['Disfrute total', 'Sobrecarga sensorial posible', 'Aburrimiento', 'Enojo'], correct: 1 },
+          { type: 'freq', q: '¿Te resulta difícil improvisar en conversaciones o planes?' },
+          { type: 'thermo', q: '¿Qué tan fácil te resulta “leer” las intenciones de los demás? (0 = muy difícil, 10 = muy fácil)', invert: true },
+          { type: 'freq', q: '¿Has tenido periodos de interés muy intenso en un tema (hiperfoco)?' },
+          { type: 'freq', q: '¿Te incomoda cuando alguien interrumpe tu concentración?' },
+          { type: 'memory', q: 'Memoriza la secuencia. Luego escríbela.', sequence: '9 2 B 7 X 3' },
+          { type: 'freq', q: '¿Prefieres saber de antemano qué va a pasar en un evento social?' },
+          { type: 'freq', q: '¿Te cuesta expresar cómo te sientes con palabras?' },
+          { type: 'stroop', q: 'Indica el COLOR de la tinta (no la palabra).', word: 'AMARILLO', color: 'azul' },
+          { type: 'freq', q: '¿Sientes que a veces “no entiendes” las dinámicas de grupo?' },
+          { type: 'search', q: '¿Cuántas veces aparece el símbolo ■ en el tablero?', target: '■', count: 8 },
+          { type: 'freq', q: '¿Te resulta más cómodo seguir reglas claras que improvisar?' },
+          { type: 'open', q: 'Describe alguna situación social o sensorial que te resulte especialmente difícil o agotadora. (No suma puntos.)' }
+        ]
+      },
+      ansiedad: {
+        id: 'ansiedad', name: 'Ansiedad', icon: '⚡', iconClass: 'icon-anx',
+        desc: 'Preocupación excesiva, tensión física, evitación y sensación de amenaza.',
+        items: [
+          { type: 'freq', q: '¿Te sientes nervioso/a, ansioso/a o con los nervios de punta?' },
+          { type: 'freq', q: '¿No puedes dejar de preocuparte o controlar la preocupación?' },
+          { type: 'freq', q: '¿Te preocupas demasiado por diferentes cosas?' },
+          { type: 'freq', q: '¿Tienes dificultad para relajarte?' },
+          { type: 'freq', q: '¿Estás tan inquieto/a que te resulta difícil quedarte quieto/a?' },
+          { type: 'freq', q: '¿Te irritas o enojas con facilidad?' },
+          { type: 'freq', q: '¿Sientes miedo como si algo terrible fuera a pasar?' },
+          { type: 'freq', q: '¿Evitas situaciones porque te generan ansiedad?' },
+          { type: 'freq', q: '¿Notas tensión en el cuerpo (hombros, mandíbula, estómago)?' },
+          { type: 'thermo', q: '¿Qué tan intensa ha sido tu ansiedad en la última semana? (0-10)' },
+          { type: 'freq', q: '¿Te cuesta conciliar el sueño por pensamientos que no paran?' },
+          { type: 'freq', q: '¿Has tenido episodios de taquicardia, sudoración o falta de aire sin causa médica clara?' },
+          { type: 'freq', q: '¿Anticipas lo peor en situaciones futuras?' },
+          { type: 'freq', q: '¿Revisas repetidamente cosas (cerraduras, mensajes, trabajo) por miedo a equivocarte?' },
+          { type: 'scene', q: '¿Qué emoción sugiere esta escena?', scene: '😰 💭 ⏳', options: ['Calma', 'Preocupación / ansiedad', 'Alegría', 'Aburrimiento'], correct: 1 },
+          { type: 'freq', q: '¿Te resulta difícil concentrarte cuando estás preocupado/a?' },
+          { type: 'freq', q: '¿Evitas hablar en público o situaciones donde puedas ser evaluado/a?' },
+          { type: 'memory', q: 'Memoriza la secuencia. Luego escríbela.', sequence: '5 1 8 3 6' },
+          { type: 'freq', q: '¿Sientes que tu mente “no para” aunque quieras descansar?' },
+          { type: 'thermo', q: '¿Qué tanto afecta la ansiedad tu vida diaria (trabajo, relaciones, sueño)? (0-10)' },
+          { type: 'freq', q: '¿Has cancelado planes por miedo o nervios?' },
+          { type: 'search', q: '¿Cuántas veces aparece el símbolo ✦ en el tablero?', target: '✦', count: 4 },
+          { type: 'freq', q: '¿Te preocupas por la opinión que otros tienen de ti?' },
+          { type: 'freq', q: '¿Notas que tu respiración se acelera cuando estás nervioso/a?' },
+          { type: 'stroop', q: 'Indica el COLOR de la tinta (no la palabra).', word: 'ROJO', color: 'verde' },
+          { type: 'freq', q: '¿Te cuesta tomar decisiones por miedo a equivocarte?' },
+          { type: 'freq', q: '¿Has sentido que el corazón te late muy fuerte sin esfuerzo físico?' },
+          { type: 'scene', q: '¿Cuál es la lectura más probable?', scene: '😟 📱 💬', options: ['Relajación', 'Preocupación por mensajes o juicios', 'Entusiasmo', 'Indiferencia'], correct: 1 },
+          { type: 'freq', q: '¿Evitas noticias o temas que te generan inquietud?' },
+          { type: 'thermo', q: '¿Qué tan capaz te sientes de manejar tu ansiedad hoy? (0 = nada, 10 = totalmente)', invert: true },
+          { type: 'freq', q: '¿Tienes pensamientos del tipo “y si…?” de forma repetitiva?' },
+          { type: 'freq', q: '¿Te sientes tenso/a incluso cuando no hay una amenaza real?' },
+          { type: 'memory', q: 'Memoriza la secuencia. Luego escríbela.', sequence: '2 9 4 7 1 8' },
+          { type: 'freq', q: '¿Has sentido mareos o temblores asociados a nervios?' },
+          { type: 'freq', q: '¿Te resulta difícil disfrutar el presente porque piensas en el futuro?' },
+          { type: 'stroop', q: 'Indica el COLOR de la tinta (no la palabra).', word: 'VERDE', color: 'amarillo' },
+          { type: 'freq', q: '¿Evitas lugares concurridos por sentir incomodidad?' },
+          { type: 'search', q: '¿Cuántas veces aparece el símbolo ○ en el tablero?', target: '○', count: 9 },
+          { type: 'freq', q: '¿Sientes que necesitas controlarlo todo para estar tranquilo/a?' },
+          { type: 'open', q: 'Describe una situación reciente que te generó mucha ansiedad y cómo la manejaste (o no). (No suma puntos.)' }
+        ]
+      },
+      tdah: {
+        id: 'tdah', name: 'TDAH', icon: '🎯', iconClass: 'icon-adhd',
+        desc: 'Atención, impulsividad, organización, hiperactividad y regulación emocional.',
+        items: [
+          { type: 'freq', q: '¿Te cuesta mantener la atención en tareas que no te interesan mucho?' },
+          { type: 'freq', q: '¿Cometes errores por descuido en el trabajo o estudios?' },
+          { type: 'freq', q: '¿Se te dificulta organizar tareas y actividades?' },
+          { type: 'freq', q: '¿Evitas o pospones tareas que requieren esfuerzo mental sostenido?' },
+          { type: 'freq', q: '¿Pierdes cosas necesarias para tus actividades (llaves, celular, documentos)?' },
+          { type: 'freq', q: '¿Te distraes fácilmente con estímulos externos o pensamientos?' },
+          { type: 'freq', q: '¿Olvidas actividades cotidianas (citas, pagos, recados)?' },
+          { type: 'freq', q: '¿Te mueves mucho, te retuerces o te sientes inquieto/a cuando tienes que estar sentado/a?' },
+          { type: 'freq', q: '¿Te resulta difícil esperar tu turno o interrumpes a otros con frecuencia?' },
+          { type: 'thermo', q: '¿Qué tan difícil te resulta concentrarte en una tarea aburrida pero importante? (0-10)' },
+          { type: 'freq', q: '¿Hablas en exceso o terminas las frases de los demás?' },
+          { type: 'freq', q: '¿Actúas sin pensar en las consecuencias en el momento?' },
+          { type: 'freq', q: '¿Te cuesta seguir instrucciones largas o de varios pasos?' },
+          { type: 'freq', q: '¿Sientes que tu mente salta de un tema a otro constantemente?' },
+          { type: 'scene', q: '¿Qué describe mejor esta escena?', scene: '😵‍💫 📝 ⏰', options: ['Concentración plena', 'Dificultad para enfocarse / agobio', 'Calma total', 'Alegría'], correct: 1 },
+          { type: 'freq', q: '¿Empiezas muchos proyectos y dejas varios a medias?' },
+          { type: 'freq', q: '¿Te cuesta manejar el tiempo (llegas tarde, subestimas cuánto tarda algo)?' },
+          { type: 'memory', q: 'Memoriza la secuencia. Luego escríbela.', sequence: '6 3 9 1 4' },
+          { type: 'freq', q: '¿Sientes una necesidad interna de estar haciendo algo todo el tiempo?' },
+          { type: 'thermo', q: '¿Qué tanto afecta la desorganización o la procrastinación tu vida diaria? (0-10)' },
+          { type: 'freq', q: '¿Te aburres con facilidad si no hay estímulo suficiente?' },
+          { type: 'search', q: '¿Cuántas veces aparece el símbolo ◆ en el tablero?', target: '◆', count: 5 },
+          { type: 'freq', q: '¿Tienes rachas de hiperconcentración en cosas que te gustan y luego “crash”?' },
+          { type: 'freq', q: '¿Te resulta difícil regular emociones (frustración, aburrimiento, emoción)?' },
+          { type: 'stroop', q: 'Indica el COLOR de la tinta (no la palabra).', word: 'AZUL', color: 'rojo' },
+          { type: 'freq', q: '¿Pierdes el hilo de conversaciones o reuniones?' },
+          { type: 'freq', q: '¿Te sientes “acelerado/a” por dentro aunque por fuera parezcas calmado/a?' },
+          { type: 'scene', q: '¿Qué sugiere esta escena?', scene: '🏃 📱 💡 📝', options: ['Rutina tranquila', 'Múltiples estímulos / multitarea intensa', 'Descanso', 'Orden perfecto'], correct: 1 },
+          { type: 'freq', q: '¿Te cuesta priorizar qué es más importante hacer primero?' },
+          { type: 'thermo', q: '¿Qué tan impulsivo/a te consideras en decisiones del día a día? (0-10)' },
+          { type: 'freq', q: '¿Has recibido comentarios de que “no pones atención” o “estás en las nubes”?' },
+          { type: 'freq', q: '¿Te resulta difícil leer textos largos sin perderte?' },
+          { type: 'memory', q: 'Memoriza la secuencia. Luego escríbela.', sequence: '8 2 5 9 3 7' },
+          { type: 'freq', q: '¿Sientes que necesitas más estímulo que otras personas para no aburrirte?' },
+          { type: 'freq', q: '¿Te cuesta terminar lo que empiezas aunque sea importante?' },
+          { type: 'stroop', q: 'Indica el COLOR de la tinta (no la palabra).', word: 'AMARILLO', color: 'verde' },
+          { type: 'freq', q: '¿Tienes un “ruido mental” constante que dificulta el silencio interior?' },
+          { type: 'search', q: '¿Cuántas veces aparece el símbolo ▲ en el tablero?', target: '▲', count: 6 },
+          { type: 'freq', q: '¿Te resulta más fácil trabajar bajo presión o con plazos muy cercanos?' },
+          { type: 'open', q: 'Describe cómo afecta (si es que afecta) la atención, la impulsividad o la organización a tu día a día. (No suma puntos.)' }
+        ]
+      },
+      acoso: {
+        id: 'acoso', name: 'Acoso', icon: '🛡', iconClass: 'icon-bull',
+        desc: 'Experiencias de hostigamiento, exclusión, ciberacoso e impacto emocional.',
+        items: [
+          { type: 'freq', q: '¿Has recibido burlas, insultos o apodos ofensivos de forma repetida?' },
+          { type: 'freq', q: '¿Te han excluido deliberadamente de grupos o actividades?' },
+          { type: 'freq', q: '¿Han difundido rumores o mentiras sobre ti?' },
+          { type: 'freq', q: '¿Has recibido mensajes, comentarios o publicaciones ofensivas en redes o chat?' },
+          { type: 'freq', q: '¿Te han amenazado o intimidado de alguna forma?' },
+          { type: 'freq', q: '¿Has sentido miedo de ir a ciertos lugares por posibles burlas o ataques?' },
+          { type: 'freq', q: '¿Te han criticado o ridiculizado por tu apariencia, forma de ser o intereses?' },
+          { type: 'freq', q: '¿Has notado que otras personas se ríen de ti a tus espaldas?' },
+          { type: 'freq', q: '¿Te han presionado para hacer cosas que no querías bajo amenaza de exclusión?' },
+          { type: 'thermo', q: '¿Qué tan afectado/a te sientes por experiencias de acoso (pasadas o actuales)? (0-10)' },
+          { type: 'freq', q: '¿Has evitado redes sociales o ciertos grupos por miedo al acoso?' },
+          { type: 'freq', q: '¿Te han enviado mensajes anónimos o de cuentas falsas con contenido hiriente?' },
+          { type: 'freq', q: '¿Has sentido que nadie te defendió cuando te acosaban?' },
+          { type: 'freq', q: '¿El acoso ha afectado tu autoestima o cómo te ves a ti mismo/a?' },
+          { type: 'scene', q: '¿Qué está ocurriendo en esta escena?', scene: '😔 👥 💬💢', options: ['Apoyo mutuo', 'Posible burla o exclusión', 'Celebración', 'Conversación neutral'], correct: 1 },
+          { type: 'freq', q: '¿Has tenido problemas para concentrarte en el estudio o trabajo por pensar en el acoso?' },
+          { type: 'freq', q: '¿Has cambiado tu forma de vestir, hablar o comportarte para evitar ser blanco de burlas?' },
+          { type: 'memory', q: 'Memoriza la secuencia. Luego escríbela.', sequence: '4 7 2 9 5' },
+          { type: 'freq', q: '¿Te han aislado o ignorado de forma intencional en el trabajo, escuela o grupo de amigos?' },
+          { type: 'thermo', q: '¿Qué tanto impacta el acoso (o el recuerdo de él) en tu estado de ánimo actual? (0-10)' },
+          { type: 'freq', q: '¿Has recibido comentarios sexuales no deseados o de carácter hostigador?' },
+          { type: 'search', q: '¿Cuántas veces aparece el símbolo ✕ en el tablero?', target: '✕', count: 7 },
+          { type: 'freq', q: '¿Te han hecho sentir culpable o responsable de ser acosado/a?' },
+          { type: 'freq', q: '¿Has experimentado acoso por parte de alguien con más poder (jefe, profesor, figura de autoridad)?' },
+          { type: 'stroop', q: 'Indica el COLOR de la tinta (no la palabra).', word: 'ROJO', color: 'azul' },
+          { type: 'freq', q: '¿Has tenido miedo de denunciar o hablar del acoso por posibles represalias?' },
+          { type: 'freq', q: '¿El acoso te ha llevado a aislarte de otras personas?' },
+          { type: 'scene', q: '¿Cuál es la lectura más probable?', scene: '😟 📱 👀', options: ['Tranquilidad', 'Vigilancia o ciberacoso posible', 'Alegría', 'Indiferencia'], correct: 1 },
+          { type: 'freq', q: '¿Has sentido rabia, tristeza o vergüenza persistente por experiencias de acoso?' },
+          { type: 'thermo', q: '¿Qué tan seguro/a te sientes actualmente en tus entornos (escuela, trabajo, redes)? (0-10)', invert: true },
+          { type: 'freq', q: '¿Te han amenazado con publicar información privada o fotos tuyas?' },
+          { type: 'freq', q: '¿Has notado que el acoso se repite en distintos contextos de tu vida?' },
+          { type: 'memory', q: 'Memoriza la secuencia. Luego escríbela.', sequence: '1 6 3 8 2 4' },
+          { type: 'freq', q: '¿Has evitado pedir ayuda por sentir que “no es para tanto” o que no te creerían?' },
+          { type: 'freq', q: '¿El acoso ha afectado tu rendimiento académico o laboral?' },
+          { type: 'stroop', q: 'Indica el COLOR de la tinta (no la palabra).', word: 'VERDE', color: 'rojo' },
+          { type: 'freq', q: '¿Te han hecho sentir que no perteneces a un grupo de forma deliberada?' },
+          { type: 'search', q: '¿Cuántas veces aparece el símbolo □ en el tablero?', target: '□', count: 5 },
+          { type: 'freq', q: '¿Has tenido pensamientos de que “algo está mal en ti” por haber sido acosado/a?' },
+          { type: 'open', q: 'Si lo deseas, describe brevemente alguna experiencia de acoso y cómo te ha afectado. (No suma puntos. Puedes omitirlo.)' }
+        ]
+      },
+      abuso: {
+        id: 'abuso', name: 'Abuso', icon: '🔒', iconClass: 'icon-abu',
+        desc: 'Situaciones de maltrato, control, violencia y seguridad personal.',
+        items: [
+          { type: 'freq', q: '¿Alguien cercano te ha gritado, insultado o humillado de forma repetida?' },
+          { type: 'freq', q: '¿Te han controlado el dinero, el celular, las salidas o las amistades?' },
+          { type: 'freq', q: '¿Has sentido miedo de la reacción de alguien con quien convives o tienes relación cercana?' },
+          { type: 'freq', q: '¿Te han obligado a hacer algo que no querías bajo presión o amenaza?' },
+          { type: 'freq', q: '¿Alguien te ha empujado, golpeado o hecho daño físico?' },
+          { type: 'freq', q: '¿Te han amenazado con hacerte daño a ti o a alguien que quieres?' },
+          { type: 'freq', q: '¿Has sentido que “caminas en huevos” para no provocar enojos?' },
+          { type: 'freq', q: '¿Te han aislado de amigos o familiares de forma intencional?' },
+          { type: 'freq', q: '¿Alguien ha usado tu información personal, fotos o secretos en tu contra?' },
+          { type: 'thermo', q: '¿Qué tan seguro/a te sientes en tu relación o entorno más cercano actualmente? (0 = nada, 10 = totalmente seguro/a)', invert: true },
+          { type: 'freq', q: '¿Te han hecho sentir que todo es tu culpa cuando hay problemas?' },
+          { type: 'freq', q: '¿Has tenido que mentir o ocultar cosas para evitar conflictos o castigos?' },
+          { type: 'freq', q: '¿Te han vigilado constantemente (mensajes, ubicación, redes)?' },
+          { type: 'freq', q: '¿Has sentido que no puedes expresar tu opinión sin consecuencias negativas?' },
+          { type: 'scene', q: '¿Qué sugiere esta escena?', scene: '😨 🗣️💢 🚪', options: ['Conversación calmada', 'Posible intimidación o conflicto', 'Alegría', 'Indiferencia'], correct: 1 },
+          { type: 'freq', q: '¿Te han tocado de forma no deseada o forzado a actos sexuales?' },
+          { type: 'freq', q: '¿Has sentido que tu valor depende de complacer a otra persona?' },
+          { type: 'memory', q: 'Memoriza la secuencia. Luego escríbela.', sequence: '3 9 5 1 7' },
+          { type: 'freq', q: '¿Te han amenazado con abandonarte, quitarte algo importante o hacerte daño emocional intenso?' },
+          { type: 'thermo', q: '¿Qué tanto impactan estas experiencias (si las has vivido) en tu bienestar actual? (0-10)' },
+          { type: 'freq', q: '¿Has sentido que no tienes derecho a poner límites?' },
+          { type: 'search', q: '¿Cuántas veces aparece el símbolo ⬤ en el tablero?', target: '⬤', count: 6 },
+          { type: 'freq', q: '¿Te han hecho sentir menospreciado/a o inferior de forma sistemática?' },
+          { type: 'freq', q: '¿Has tenido que cambiar planes, ropa o comportamientos por miedo a la reacción de alguien?' },
+          { type: 'stroop', q: 'Indica el COLOR de la tinta (no la palabra).', word: 'AZUL', color: 'amarillo' },
+          { type: 'freq', q: '¿Te han impedido trabajar, estudiar o tener independencia económica?' },
+          { type: 'freq', q: '¿Has sentido que “no eres suficiente” por comentarios constantes de alguien cercano?' },
+          { type: 'scene', q: '¿Cuál es la lectura más probable?', scene: '😔 🔒 👤', options: ['Libertad', 'Control o restricción posible', 'Celebración', 'Calma'], correct: 1 },
+          { type: 'freq', q: '¿Te han hecho dudar de tu memoria o percepción de los hechos (gaslighting)?' },
+          { type: 'thermo', q: '¿Qué tan capaz te sientes de pedir ayuda o poner límites en este momento? (0-10)', invert: true },
+          { type: 'freq', q: '¿Has experimentado ciclos de tensión, explosión y “luna de miel” o arrepentimiento?' },
+          { type: 'freq', q: '¿Te han amenazado con hacerte daño si terminas una relación o denuncias algo?' },
+          { type: 'memory', q: 'Memoriza la secuencia. Luego escríbela.', sequence: '8 4 2 6 9 1' },
+          { type: 'freq', q: '¿Has sentido que tu cuerpo o tu intimidad no te pertenecen del todo?' },
+          { type: 'freq', q: '¿Te han obligado a justificar constantemente dónde estás o con quién?' },
+          { type: 'stroop', q: 'Indica el COLOR de la tinta (no la palabra).', word: 'ROJO', color: 'verde' },
+          { type: 'freq', q: '¿Has tenido miedo de las consecuencias de hablar sobre lo que te pasa?' },
+          { type: 'search', q: '¿Cuántas veces aparece el símbolo ◇ en el tablero?', target: '◇', count: 4 },
+          { type: 'freq', q: '¿Sientes que tu autoestima o confianza se han visto dañadas por alguien cercano?' },
+          { type: 'open', q: 'Si lo deseas y te sientes seguro/a, describe cómo te has sentido en relaciones o entornos donde ha habido control, maltrato o abuso. (No suma puntos. Puedes omitirlo por completo.)' }
+        ]
+      },
+      cognicion: {
+        id: 'cognicion', name: 'Cognición', icon: '◆', iconClass: 'icon-cog',
+        desc: 'Razonamiento, series, analogías, rotación espacial, memoria de trabajo, velocidad e inhibición: un perfil orientativo de tu forma de pensar.',
+        items: [
+          { type: 'choice', domain: 'razonamiento', q: 'Continúa la serie.', stimulus: '3 · 6 · 12 · 24 · ?', options: ['30', '48', '36', '56'], correct: 1 },
+          { type: 'choice', domain: 'razonamiento', q: 'Continúa la serie.', stimulus: '2 · 3 · 5 · 8 · 13 · ?', options: ['18', '21', '20', '26'], correct: 1 },
+          { type: 'choice', domain: 'razonamiento', q: 'Continúa la serie.', stimulus: '1 · 4 · 9 · 16 · ?', options: ['20', '25', '24', '32'], correct: 1 },
+          { type: 'choice', domain: 'razonamiento', q: 'Continúa la serie.', stimulus: '81 · 27 · 9 · 3 · ?', options: ['0', '1', '1.5', '3'], correct: 1 },
+          { type: 'choice', domain: 'razonamiento', q: 'Continúa la serie.', stimulus: '2 · 6 · 12 · 20 · 30 · ?', options: ['36', '42', '40', '48'], correct: 1 },
+          { type: 'choice', domain: 'razonamiento', q: 'Continúa la serie.', stimulus: '1 · 1 · 2 · 3 · 5 · 8 · ?', options: ['11', '13', '12', '15'], correct: 1 },
+          { type: 'choice', domain: 'razonamiento', q: 'Continúa la serie de letras.', stimulus: 'A · C · F · J · ?', options: ['M', 'O', 'N', 'P'], correct: 1 },
+          { type: 'choice', domain: 'razonamiento', q: 'Continúa la serie de letras.', stimulus: 'B · D · G · K · ?', options: ['N', 'P', 'O', 'Q'], correct: 1 },
+          { type: 'choice', domain: 'razonamiento', q: 'Completa la analogía.', stimulus: 'Manzana es a fruta como zanahoria es a …', options: ['Verdura', 'Raíz seca', 'Sabor dulce', 'Postre'], correct: 0 },
+          { type: 'choice', domain: 'razonamiento', q: 'Completa la analogía.', stimulus: 'Reloj es a tiempo como termómetro es a …', options: ['Frío', 'Temperatura', 'Metal', 'Enfermedad'], correct: 1 },
+          { type: 'choice', domain: 'razonamiento', q: 'Completa la analogía.', stimulus: 'Libro es a leer como piano es a …', options: ['Escuchar', 'Tocar', 'Componer', 'Afinar'], correct: 1 },
+          { type: 'choice', domain: 'razonamiento', q: 'Completa la analogía.', stimulus: 'Pluma es a escribir como cuchillo es a …', options: ['Cocinar', 'Cortar', 'Afilar', 'Guardar'], correct: 1 },
+          { type: 'choice', domain: 'razonamiento', q: '¿Qué figura continúa el patrón?', stimulus: '▲ ▲ ● ▲ ▲ ● ▲ ▲ ?', options: ['▲', '●', '■', '◆'], correct: 1 },
+          { type: 'choice', domain: 'razonamiento', q: 'Continúa la progresión.', stimulus: '1 · 3 · 6 · 10 · 15 · ?', options: ['18', '21', '20', '24'], correct: 1 },
+          { type: 'choice', domain: 'razonamiento', q: 'Continúa la progresión.', stimulus: '7 · 14 · 28 · 56 · ?', options: ['84', '112', '98', '128'], correct: 1 },
+          { type: 'choice', domain: 'espacial', q: 'Giras una flecha que apunta al norte 90 grados en sentido horario. ¿Hacia dónde apunta ahora?', options: ['Norte', 'Este', 'Sur', 'Oeste'], correct: 1 },
+          { type: 'choice', domain: 'espacial', q: 'Giras una flecha que apunta al este 180 grados. ¿Hacia dónde apunta ahora?', options: ['Norte', 'Oeste', 'Este', 'Sur'], correct: 1 },
+          { type: 'choice', domain: 'espacial', q: 'Giras una flecha que apunta al sur 90 grados en sentido antihorario. ¿Hacia dónde apunta ahora?', options: ['Este', 'Oeste', 'Norte', 'Sur'], correct: 0 },
+          { type: 'choice', domain: 'espacial', q: 'Giras una flecha que apunta al oeste 270 grados en sentido horario. ¿Hacia dónde apunta ahora?', options: ['Norte', 'Este', 'Sur', 'Oeste'], correct: 0 },
+          { type: 'choice', domain: 'espacial', q: 'Doblas una hoja de papel por la mitad dos veces y la perforas una vez. Al desdoblarla, ¿cuántos agujeros esperas ver?', options: ['2', '4', '3', '6'], correct: 1 },
+          { type: 'choice', domain: 'espacial', q: '¿Cuántas caras de un cubo puedes ver como máximo desde un solo punto de vista?', options: ['2', '3', '4', '6'], correct: 1 },
+          { type: 'choice', domain: 'espacial', q: 'Si giras 180 grados la letra b, ¿qué letra parece?', options: ['p', 'q', 'd', 'b'], correct: 1 },
+          { type: 'choice', domain: 'espacial', q: 'Si giras 180 grados la letra d, ¿qué letra parece?', options: ['b', 'p', 'q', 'd'], correct: 1 },
+          { type: 'memory', domain: 'memoria', q: 'Memoriza la secuencia. Luego escríbela.', sequence: '8 3 1 9 4' },
+          { type: 'memory', domain: 'memoria', q: 'Memoriza la secuencia. Luego escríbela.', sequence: '5 7 2 8 6 1' },
+          { type: 'memory', domain: 'memoria', q: 'Memoriza la secuencia. Luego escríbela.', sequence: '9 4 7 2 5 8 3' },
+          { type: 'memory', domain: 'memoria', q: 'Memoriza la secuencia. Luego escríbela.', sequence: '2 9 6 3 8 1 7 4' },
+          { type: 'memory', domain: 'memoria', q: 'Memoriza la secuencia. Luego escríbela.', sequence: '7 1 8 4 2 9 5 3 6' },
+          { type: 'memory', domain: 'memoria', q: 'Memoriza la secuencia. Luego escríbela.', sequence: '4 8 2 9 1 6 3 7' },
+          { type: 'search', domain: 'velocidad', q: '¿Cuántas veces aparece el símbolo ▲ en el tablero?', target: '▲', count: 6 },
+          { type: 'search', domain: 'velocidad', q: '¿Cuántas veces aparece el símbolo ● en el tablero?', target: '●', count: 9 },
+          { type: 'search', domain: 'velocidad', q: '¿Cuántas veces aparece el símbolo ◇ en el tablero?', target: '◇', count: 5 },
+          { type: 'search', domain: 'velocidad', q: '¿Cuántas veces aparece el símbolo ■ en el tablero?', target: '■', count: 7 },
+          { type: 'search', domain: 'velocidad', q: '¿Cuántas veces aparece el símbolo ★ en el tablero?', target: '★', count: 4 },
+          { type: 'search', domain: 'velocidad', q: '¿Cuántas veces aparece el símbolo ✕ en el tablero?', target: '✕', count: 8 },
+          { type: 'stroop', domain: 'inhibicion', q: 'Indica el COLOR de la tinta, no la palabra.', word: 'VERDE', color: 'rojo' },
+          { type: 'stroop', domain: 'inhibicion', q: 'Indica el COLOR de la tinta, no la palabra.', word: 'AMARILLO', color: 'azul' },
+          { type: 'stroop', domain: 'inhibicion', q: 'Indica el COLOR de la tinta, no la palabra.', word: 'AZUL', color: 'verde' },
+          { type: 'stroop', domain: 'inhibicion', q: 'Indica el COLOR de la tinta, no la palabra.', word: 'ROJO', color: 'azul' },
+          { type: 'open', domain: 'abierto', q: '¿Qué tipo de tareas mentales te resultan más fáciles y cuáles más difíciles? (No suma puntos.)' }
+        ]
+      },
+      razonamiento: {
+        id: 'razonamiento', name: 'Razonamiento e inteligencia', icon: '◇', iconClass: 'icon-iq',
+        desc: 'Batería de cinco subpruebas: matrices abstractas, series y analogías, dígitos en orden inverso, claves de velocidad y letras y números. Devuelve una estimación orientativa en escala de CI.',
+        items: [
+          { type: 'matrix', domain: 'matrices', q: '¿Qué figura completa el patrón?', stem: ['■', '□', '■', '□', '■', '□', '■', '□'], options: ['■', '□', '●', '▲'], correct: 0 },
+          { type: 'matrix', domain: 'matrices', q: 'Completa el patrón.', stem: ['1', '2', '3', '2', '4', '6', '3', '6'], options: ['8', '9', '10', '12'], correct: 1 },
+          { type: 'matrix', domain: 'matrices', q: 'Completa el patrón.', stem: ['●', '○', '●', '○', '●', '○', '●', '○'], options: ['●', '○', '◐', '◑'], correct: 0 },
+          { type: 'matrix', domain: 'matrices', q: 'Completa el patrón.', stem: ['2', '4', '8', '3', '9', '27', '4', '16'], options: ['32', '48', '64', '81'], correct: 2 },
+          { type: 'matrix', domain: 'matrices', q: 'Completa el patrón.', stem: ['1', '2', '4', '8', '16', '32', '64', '128'], options: ['192', '256', '512', '1024'], correct: 1 },
+          { type: 'matrix', domain: 'matrices', q: 'Completa el patrón de letras.', stem: ['A', 'B', 'C', 'B', 'C', 'D', 'C', 'D'], options: ['D', 'E', 'F', 'G'], correct: 1 },
+          { type: 'matrix', domain: 'matrices', q: 'Completa el patrón.', stem: ['3', '6', '9', '6', '12', '18', '9', '18'], options: ['21', '24', '27', '36'], correct: 2 },
+          { type: 'matrix', domain: 'matrices', q: 'Completa el patrón.', stem: ['◆', '◆◆', '◆◆◆', '◆◆', '◆◆◆', '◆◆◆◆', '◆◆◆', '◆◆◆◆'], options: ['◆◆◆◆', '◆◆◆◆◆', '◆◆◆◆◆◆', '◆◆'], correct: 1 },
+          { type: 'choice', domain: 'series', q: 'Continúa la serie.', stimulus: '2 · 4 · 8 · 16 · ?', options: ['24', '32', '40', '64'], correct: 1 },
+          { type: 'choice', domain: 'series', q: 'Continúa la serie.', stimulus: '3 · 6 · 9 · 12 · ?', options: ['13', '15', '16', '18'], correct: 1 },
+          { type: 'choice', domain: 'series', q: 'Continúa la serie.', stimulus: '5 · 10 · 20 · 40 · ?', options: ['60', '80', '100', '120'], correct: 1 },
+          { type: 'choice', domain: 'series', q: 'Continúa la serie.', stimulus: '100 · 90 · 81 · 73 · ?', options: ['64', '66', '67', '70'], correct: 1 },
+          { type: 'choice', domain: 'series', q: 'Continúa la serie.', stimulus: '1 · 2 · 6 · 24 · 120 · ?', options: ['600', '720', '840', '750'], correct: 1 },
+          { type: 'choice', domain: 'series', q: 'Continúa la serie.', stimulus: '2 · 5 · 10 · 17 · 26 · ?', options: ['35', '37', '39', '41'], correct: 1 },
+          { type: 'choice', domain: 'series', q: 'Continúa la serie.', stimulus: '0 · 1 · 3 · 6 · 10 · 15 · ?', options: ['18', '21', '24', '28'], correct: 1 },
+          { type: 'choice', domain: 'series', q: 'Continúa la serie.', stimulus: '1 · 8 · 27 · 64 · ?', options: ['100', '125', '120', '216'], correct: 1 },
+          { type: 'choice', domain: 'series', q: 'Continúa la serie.', stimulus: '4 · 9 · 16 · 25 · ?', options: ['30', '36', '35', '49'], correct: 1 },
+          { type: 'choice', domain: 'series', q: 'Completa la analogía.', stimulus: 'Libro es a capítulo como edificio es a …', options: ['Ladrillo', 'Piso', 'Ciudad', 'Techo'], correct: 1 },
+          { type: 'choice', domain: 'series', q: 'Completa la analogía.', stimulus: 'Sed es a beber como hambre es a …', options: ['Cocinar', 'Comer', 'Comprar', 'Oler'], correct: 1 },
+          { type: 'choice', domain: 'series', q: 'Completa la analogía.', stimulus: 'Pintor es a cuadro como escritor es a …', options: ['Lápiz', 'Libro', 'Lector', 'Papel'], correct: 1 },
+          { type: 'rmem', domain: 'memoria', q: 'Memoriza los dígitos y escríbelos en orden INVERSO.', sequence: '4 9 2 7', correct: '7249' },
+          { type: 'rmem', domain: 'memoria', q: 'Memoriza los dígitos y escríbelos en orden INVERSO.', sequence: '6 1 8 3 5', correct: '53816' },
+          { type: 'rmem', domain: 'memoria', q: 'Memoriza los dígitos y escríbelos en orden INVERSO.', sequence: '2 7 4 9 1 6', correct: '619472' },
+          { type: 'rmem', domain: 'memoria', q: 'Memoriza los dígitos y escríbelos en orden INVERSO.', sequence: '8 3 9 5 2 7 4', correct: '4725938' },
+          { type: 'coding', domain: 'clave', q: '¿Qué número corresponde al símbolo?', symbol: '●', options: ['1', '2', '3', '4'], correct: '2' },
+          { type: 'coding', domain: 'clave', q: '¿Qué número corresponde al símbolo?', symbol: '◆', options: ['2', '3', '4', '5'], correct: '4' },
+          { type: 'coding', domain: 'clave', q: '¿Qué número corresponde al símbolo?', symbol: '■', options: ['1', '3', '4', '2'], correct: '3' },
+          { type: 'coding', domain: 'clave', q: '¿Qué número corresponde al símbolo?', symbol: '▲', options: ['4', '1', '2', '3'], correct: '1' },
+          { type: 'coding', domain: 'clave', q: 'Traduce la secuencia de símbolos.', symbol: '■ ▲', options: ['31', '13', '34', '14'], correct: '31' },
+          { type: 'coding', domain: 'clave', q: 'Traduce la secuencia de símbolos.', symbol: '◆ ● ▲', options: ['421', '412', '241', '124'], correct: '421' },
+          { type: 'letters', domain: 'letras', q: 'Ordena los elementos: primero los números de menor a mayor y después las letras en orden alfabético.', stimulus: '3 M', correct: '3M' },
+          { type: 'letters', domain: 'letras', q: 'Ordena los elementos: primero los números de menor a mayor y después las letras en orden alfabético.', stimulus: 'M 3', correct: '3M' },
+          { type: 'letters', domain: 'letras', q: 'Ordena los elementos: primero los números de menor a mayor y después las letras en orden alfabético.', stimulus: '7 A 2', correct: '27A' },
+          { type: 'letters', domain: 'letras', q: 'Ordena los elementos: primero los números de menor a mayor y después las letras en orden alfabético.', stimulus: 'B 4 1 N', correct: '14BN' },
+          { type: 'letters', domain: 'letras', q: 'Ordena los elementos: primero los números de menor a mayor y después las letras en orden alfabético.', stimulus: '9 D 2 F 5', correct: '259DF' },
+          { type: 'open', domain: 'abierto', q: 'Antes de ver tu resultado: ¿qué tareas mentales crees que se te dan mejor? (No suma puntos.)' },
+          { type: 'open', domain: 'abierto', q: 'En la tarea de claves, ¿consultabas la tabla cada vez o memorizaste los símbolos? (No suma puntos.)' },
+          { type: 'open', domain: 'abierto', q: '¿Qué te costó más: los dígitos en orden inverso o las series numéricas? (No suma puntos.)' },
+          { type: 'open', domain: 'abierto', q: '¿Cómo te sentiste durante la prueba: cómodo, presionado, cansado? (No suma puntos.)' },
+          { type: 'open', domain: 'abierto', q: 'Si quisieras un dato firme, ¿qué le preguntarías a un profesional titulado? (No suma puntos.)' }
+        ]
+      }
+    };
+
+    function interpretation(moduleId, level) {
+      var texts = {
+        depresion: {
+          low: 'Tus respuestas sugieren un nivel bajo de indicadores asociados a depresión. Eso no elimina la posibilidad de que haya días difíciles. Si en algún momento sientes que necesitas apoyo, está bien buscarlo.',
+          mid: 'Hay indicios moderados de malestar emocional. Puede ser útil observar cómo te sientes en las próximas semanas y, si el malestar persiste o aumenta, conversar con un profesional de la salud mental.',
+          high: 'Tus respuestas señalan un nivel elevado de indicadores relacionados con depresión. Esto no es un diagnóstico, pero sí una señal de que podría valer la pena buscar acompañamiento profesional. No tienes que enfrentarlo solo/a.'
+        },
+        autismo: {
+          low: 'Tus respuestas se alejan de los patrones más característicos de rasgos autistas según este ejercicio. Recuerda que el autismo es un espectro y solo un profesional puede evaluar de forma adecuada.',
+          mid: 'Aparecen algunos rasgos que pueden estar relacionados con el espectro autista. Esto orienta, no diagnostica. Si sientes que estas experiencias te afectan, un especialista puede ayudarte a explorarlas con más profundidad.',
+          high: 'Hay varios indicadores que coinciden con rasgos frecuentemente asociados al autismo. Un profesional especializado puede ofrecerte una evaluación completa y, si corresponde, orientarte sobre apoyos útiles.'
+        },
+        ansiedad: {
+          low: 'Los indicadores de ansiedad aparecen en un nivel bajo. Aun así, si en momentos puntuales te sientes abrumado/a, técnicas de regulación y apoyo pueden ser de ayuda.',
+          mid: 'Hay un nivel moderado de indicadores de ansiedad. Observar disparadores, hábitos de sueño y carga diaria puede ayudar. Si el malestar se mantiene, considera hablar con un profesional.',
+          high: 'Tus respuestas sugieren un nivel elevado de ansiedad. Esto no diagnostica un trastorno, pero sí indica que el malestar es significativo. Buscar apoyo profesional puede marcar una diferencia importante.'
+        },
+        tdah: {
+          low: 'Los indicadores de dificultades de atención, impulsividad u organización aparecen bajos en este ejercicio. Si en tu día a día notas dificultades puntuales, estrategias de organización pueden ser suficientes.',
+          mid: 'Hay indicios moderados de posibles dificultades relacionadas con atención o regulación. Un profesional puede ayudarte a distinguir si se trata de TDAH u otros factores (sueño, estrés, etc.).',
+          high: 'Aparecen varios indicadores elevados asociados a TDAH. Solo un profesional puede realizar una evaluación formal. Mientras tanto, estrategias de apoyo y, si es necesario, evaluación clínica pueden ser de gran ayuda.'
+        },
+        acoso: {
+          low: 'Tus respuestas indican poca o nula presencia de experiencias de acoso recientes según este ejercicio. Si en el pasado viviste algo así y aún te afecta, está bien buscar apoyo.',
+          mid: 'Hay indicios de que has vivido o vives situaciones de acoso o exclusión. El impacto puede ser real aunque no siempre se note desde fuera. Hablar con alguien de confianza o un profesional puede ayudar.',
+          high: 'Tus respuestas señalan experiencias significativas de acoso. Nadie merece pasar por eso. Si te sientes en riesgo o muy afectado/a, busca apoyo: líneas de ayuda, personas de confianza o profesionales.'
+        },
+        abuso: {
+          low: 'Los indicadores de abuso o control aparecen bajos en este ejercicio. Si en algún momento sientes que tu seguridad o dignidad están en riesgo, no dudes en pedir ayuda.',
+          mid: 'Hay señales de posibles situaciones de control, maltrato o abuso. Estas experiencias pueden ser confusas y dolorosas. Un profesional o una línea de apoyo especializada pueden orientarte de forma segura.',
+          high: 'Tus respuestas sugieren experiencias importantes de abuso o control. Tu seguridad importa. Si estás en riesgo, contacta a servicios de emergencia o líneas especializadas en violencia. No estás solo/a.'
+        }
+      };
+      return texts[moduleId][level];
+    }
+
+/* ==========================================================================
+   Mente Clara · lógica de la aplicación
+   Se ejecuta después de las definiciones de MODULES e interpretation()
+   ========================================================================== */
+
+/* ---------- Metadatos de los módulos ---------- */
+var MODULE_META = {
+  depresion:   { source: 'PHQ-9 · Kroenke, Spitzer y Williams (2001)',           tag: 'PHQ-9',      badge: null, time: '12-15 min' },
+  autismo:     { source: 'AQ-10 · Allison, Auyeung y Baron-Cohen (2012)',        tag: 'AQ-10',      badge: null, time: '12-15 min' },
+  ansiedad:    { source: 'GAD-7 · Spitzer, Kroenke, Williams y Löwe (2006)',     tag: 'GAD-7',      badge: null, time: '12-15 min' },
+  tdah:        { source: 'ASRS v1.1 · Kessler y cols. (2005), OMS',              tag: 'ASRS v1.1',  badge: null, time: '12-15 min' },
+  acoso:       { source: 'Definición uniforme de acoso · Gladden y cols. (2014)', tag: 'CDC 2014',   badge: null, time: '12-15 min' },
+  abuso:       { source: 'Estudio ACE · Felitti y cols. (1998)',                 tag: 'ACE',        badge: null, time: '12-15 min' },
+  cognicion:   { source: 'Teoría CHC · Schneider y McGrew (2018)',               tag: 'CHC',        badge: 'Perfil', time: '15-18 min' },
+  razonamiento:{ source: 'WAIS-IV · Wechsler (2008) · Raven (1938)',             tag: 'WAIS-IV',    badge: 'Estimación de CI', time: '20-25 min' }
+};
+
+var COGNITIVE_DOMAINS = {
+  razonamiento: 'Razonamiento fluido',
+  espacial:     'Visualización espacial',
+  memoria:      'Memoria de trabajo',
+  velocidad:    'Velocidad de procesamiento',
+  inhibicion:   'Control inhibitorio (tipo Stroop)'
+};
+
+var IQ_DOMAINS = {
+  matrices: 'Matrices · razonamiento abstracto',
+  series:   'Series y analogías · razonamiento fluido',
+  memoria:  'Dígitos en orden inverso · memoria de trabajo',
+  clave:    'Claves · velocidad de procesamiento',
+  letras:   'Letras y números · memoria de trabajo'
+};
+
+var IQ_DOMAIN_MAX = { matrices: 8, series: 12, memoria: 4, clave: 6, letras: 5 };
+var IQ_DOMAIN_ORDER = ['matrices', 'series', 'memoria', 'clave', 'letras'];
+
+/* Clave de codificación usada en el subtest de velocidad */
+var CODING_KEY = [['▲', '1'], ['●', '2'], ['■', '3'], ['◆', '4']];
+
+/* ---------- Estado ---------- */
+var currentModule = null;
+var currentIndex = 0;
+var answers = [];
+var openAnswer = '';
+var memoryShown = false;
+var memTimer = null;
+
+/* ---------- Navegación entre vistas ---------- */
+function showView(name) {
+  var views = document.querySelectorAll('.view');
+  for (var i = 0; i < views.length; i++) views[i].classList.remove('is-active');
+  var target = document.getElementById('view-' + name);
+  if (target) target.classList.add('is-active');
+  window.scrollTo(0, 0);
+  if (name === 'comments') renderComments();
+}
+
+function goHome() { showView('home'); }
+
+function scrollToId(id) {
+  showView('home');
+  setTimeout(function () {
+    var el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 60);
+}
+
+/* ---------- Portada: rejilla de módulos ---------- */
+function renderModules() {
+  var grid = document.getElementById('modules-grid');
+  if (!grid) return;
+  var html = '';
+  var ids = Object.keys(MODULES);
+  ids.forEach(function (id, index) {
+    var m = MODULES[id];
+    var meta = MODULE_META[id] || {};
+    var n = m.items.length;
+    html += '<article class="module-card">' +
+      '<div class="module-top">' +
+        '<div class="module-icon ' + (m.iconClass || '') + '">' + m.icon + '</div>' +
+        '<span class="module-num">Módulo ' + (index + 1) + ' de ' + ids.length + '</span>' +
+      '</div>' +
+      '<h3>' + m.name + '</h3>' +
+      '<p>' + m.desc + '</p>' +
+      '<div class="module-tags">' +
+        '<span class="tag">' + (meta.tag || 'Orientativo') + '</span>' +
+        (meta.badge ? '<span class="tag tag--new">' + meta.badge + '</span>' : '<span class="tag tag--alt">Orientativo</span>') +
+      '</div>' +
+      '<div class="module-meta"><span>' + n + ' reactivos</span><span>' + (meta.time || '~15 min') + '</span></div>' +
+      '<button class="btn btn-primary btn-block" onclick="startModule(\'' + id + '\')">Comenzar módulo</button>' +
+    '</article>';
+  });
+  grid.innerHTML = html;
+}
+
+/* ---------- Cuestionario ---------- */
+function startModule(id) {
+  currentModule = MODULES[id];
+  currentIndex = 0;
+  answers = new Array(currentModule.items.length).fill(null);
+  openAnswer = '';
+  memoryShown = false;
+  showView('quiz');
+  renderQuestion();
+}
+
+function confirmExitQuiz() {
+  var ok = confirm('Si sales ahora perderás las respuestas de este módulo. ¿Quieres salir?');
+  if (ok) { clearInterval(memTimer); showView('home'); }
+}
+
+function typeLabel(t) {
+  var map = {
+    freq: 'Frecuencia', thermo: 'Termómetro 0-10', open: 'Pregunta abierta',
+    memory: 'Memoria de trabajo', rmem: 'Memoria de trabajo inversa', search: 'Búsqueda visual',
+    stroop: 'Inhibición de color', scene: 'Interpretación de escena', choice: 'Razonamiento',
+    coding: 'Claves y velocidad', letters: 'Letras y números', matrix: 'Matrices'
+  };
+  return map[t] || t;
+}
+
+function generateSearchGrid(target, count) {
+  var symbols = ['●', '○', '■', '□', '▲', '△', '★', '✦', '◆', '◇', '✕', '⬤'];
+  var others = symbols.filter(function (s) { return s !== target; });
+  var cells = [];
+  for (var i = 0; i < count; i++) cells.push(target);
+  while (cells.length < 48) cells.push(others[Math.floor(Math.random() * others.length)]);
+  cells.sort(function () { return Math.random() - 0.5; });
+  var out = '';
+  for (var j = 0; j < cells.length; j++) out += '<div class="search-cell">' + cells[j] + '</div>';
+  return out;
+}
+
+function renderQuestion() {
+  var item = currentModule.items[currentIndex];
+  var total = currentModule.items.length;
+  var card = document.getElementById('quiz-card');
+  var meta = MODULE_META[currentModule.id] || {};
+
+  document.getElementById('quiz-module-name').textContent = meta.source || currentModule.name;
+  document.getElementById('quiz-counter').textContent = 'Reactivo ' + (currentIndex + 1) + ' de ' + total;
+  document.getElementById('quiz-progress').style.width = Math.round(((currentIndex) / total) * 100) + '%';
+
+  var html = '<div class="quiz-type">' + typeLabel(item.type) + '</div>' +
+             '<div class="quiz-question">' + item.q + '</div>';
+
+  if (item.type === 'freq') {
+    var opts = ['Nunca', 'A veces', 'Frecuentemente', 'Siempre'];
+    html += '<div class="options">';
+    for (var i = 0; i < opts.length; i++) {
+      html += '<button class="option-btn' + (answers[currentIndex] === i ? ' is-selected' : '') +
+              '" onclick="selectAnswer(' + i + ')">' + opts[i] + '</button>';
+    }
+    html += '</div>';
+  }
+  else if (item.type === 'thermo') {
+    var val = answers[currentIndex] !== null && answers[currentIndex] !== undefined ? answers[currentIndex] : 5;
+    html += '<div class="thermo-wrap">' +
+      '<div class="thermo-value" id="thermo-val">' + val + '</div>' +
+      '<input type="range" min="0" max="10" step="1" value="' + val + '" oninput="selectThermo(this.value)" aria-label="Intensidad de 0 a 10">' +
+      '<div class="thermo-scale"><span>0 · nada</span><span>5</span><span>10 · máximo</span></div>' +
+    '</div>';
+  }
+  else if (item.type === 'open') {
+    var prev = openAnswer || '';
+    html += '<textarea class="open-area" id="open-input" placeholder="Escribe aquí con tus propias palabras. Puedes dejarlo en blanco si prefieres no hacerlo." oninput="captureOpen()">' + prev + '</textarea>';
+  }
+  else if (item.type === 'memory' || item.type === 'rmem') {
+    html += '<div class="mem-stage">' +
+      '<div class="mem-display" id="mem-display"></div>' +
+      '<div class="countdown" id="mem-countdown"></div>' +
+      '<p class="mem-hint" id="mem-hint"></p>' +
+      '<input type="text" class="mem-input" id="mem-input" autocomplete="off" ' +
+        (memoryShown ? '' : 'disabled ') +
+        'placeholder="' + (item.type === 'rmem' ? 'Escríbela al revés' : 'Escríbela aquí') + '" ' +
+        'oninput="captureMemory()" value="' + (answers[currentIndex] && answers[currentIndex].user ? answers[currentIndex].user : '') + '">' +
+    '</div>';
+  }
+  else if (item.type === 'search') {
+    html += '<div class="search-grid">' + generateSearchGrid(item.target, item.count) + '</div><div class="num-btns options">';
+    var nums = [item.count - 2, item.count - 1, item.count, item.count + 1, item.count + 2].filter(function (n) { return n > 0; });
+    for (var j = 0; j < nums.length; j++) {
+      html += '<button class="option-btn' + (answers[currentIndex] === nums[j] ? ' is-selected' : '') +
+              '" onclick="selectAnswer(' + nums[j] + ')">' + nums[j] + '</button>';
+    }
+    html += '</div>';
+  }
+  else if (item.type === 'stroop') {
+    var colorMap = { rojo: '#dc2626', azul: '#2563eb', verde: '#16a34a', amarillo: '#ca8a04' };
+    var colors = ['rojo', 'azul', 'verde', 'amarillo'];
+    html += '<div class="stroop-word" style="color:' + colorMap[item.color] + '">' + item.word + '</div><div class="color-btns">';
+    for (var k = 0; k < colors.length; k++) {
+      html += '<button class="option-btn' + (answers[currentIndex] === colors[k] ? ' is-selected' : '') +
+              '" onclick="selectAnswer(\'' + colors[k] + '\')">' + colors[k].toUpperCase() + '</button>';
+    }
+    html += '</div>';
+  }
+  else if (item.type === 'scene') {
+    html += '<div class="scene">' + item.scene + '</div><div class="options">';
+    for (var m = 0; m < item.options.length; m++) {
+      html += '<button class="option-btn' + (answers[currentIndex] === m ? ' is-selected' : '') +
+              '" onclick="selectAnswer(' + m + ')">' + item.options[m] + '</button>';
+    }
+    html += '</div>';
+  }
+  else if (item.type === 'choice') {
+    if (item.stimulus) html += '<div class="stimulus">' + item.stimulus + '</div>';
+    html += '<div class="options">';
+    for (var n = 0; n < item.options.length; n++) {
+      html += '<button class="option-btn' + (answers[currentIndex] === n ? ' is-selected' : '') +
+              '" onclick="selectAnswer(' + n + ')">' + item.options[n] + '</button>';
+    }
+    html += '</div>';
+  }
+  else if (item.type === 'matrix') {
+    html += '<div class="matrix-grid">';
+    for (var g = 0; g < item.stem.length; g++) html += '<div class="matrix-cell">' + item.stem[g] + '</div>';
+    html += '<div class="matrix-cell is-missing">?</div></div><div class="options">';
+    for (var o = 0; o < item.options.length; o++) {
+      html += '<button class="option-btn' + (answers[currentIndex] === o ? ' is-selected' : '') +
+              '" onclick="selectAnswer(' + o + ')">' + item.options[o] + '</button>';
+    }
+    html += '</div>';
+  }
+  else if (item.type === 'coding') {
+    var keyHtml = '<div class="coding-key">';
+    for (var c = 0; c < CODING_KEY.length; c++) keyHtml += '<span>' + CODING_KEY[c][0] + ' = ' + CODING_KEY[c][1] + '</span>';
+    keyHtml += '</div>';
+    html += keyHtml + '<div class="stimulus">' + item.symbol + ' = ?</div><div class="options">';
+    for (var d = 0; d < item.options.length; d++) {
+      html += '<button class="option-btn' + (answers[currentIndex] === item.options[d] ? ' is-selected' : '') +
+              '" onclick="selectAnswer(\'' + item.options[d] + '\')">' + item.options[d] + '</button>';
+    }
+    html += '</div>';
+  }
+  else if (item.type === 'letters') {
+    html += '<div class="stimulus">' + item.stimulus + '</div>' +
+      '<input type="text" class="mem-input" id="letters-input" autocomplete="off" placeholder="Ej. 3 M" ' +
+      'value="' + (answers[currentIndex] || '') + '" oninput="captureLetters()">' +
+      '<p class="mem-hint">Escribe primero los números de menor a mayor y luego las letras en orden alfabético.</p>';
+  }
+
+  card.innerHTML = html;
+  document.getElementById('btn-prev').disabled = currentIndex === 0;
+  updateNextButton();
+
+  if (item.type === 'memory' || item.type === 'rmem') startMemoryCountdown(item);
+}
+
+function startMemoryCountdown(item) {
+  clearInterval(memTimer);
+  var display = document.getElementById('mem-display');
+  var hint = document.getElementById('mem-hint');
+  var cd = document.getElementById('mem-countdown');
+  var input = document.getElementById('mem-input');
+  if (!display) return;
+
+  memoryShown = false;
+  var seconds = 5;
+  display.textContent = item.sequence;
+  if (hint) hint.textContent = item.type === 'rmem'
+    ? 'Memoriza los dígitos: después deberás escribirlos en orden inverso.'
+    : 'Memoriza la secuencia: se ocultará en unos segundos.';
+  if (cd) cd.textContent = 'La secuencia se ocultará en ' + seconds + ' s';
+
+  memTimer = setInterval(function () {
+    seconds--;
+    if (seconds > 0) {
+      if (cd) cd.textContent = 'La secuencia se ocultará en ' + seconds + ' s';
+      return;
+    }
+    clearInterval(memTimer);
+    display.textContent = '• • •';
+    if (cd) cd.textContent = 'Listo: escribe lo que recuerdes.';
+    memoryShown = true;
+    if (input) { input.disabled = false; input.focus(); }
+    updateNextButton();
+  }, 1000);
+}
+
+function captureMemory() {
+  var input = document.getElementById('mem-input');
+  if (!input) return;
+  var item = currentModule.items[currentIndex];
+  var correct = item.type === 'rmem' ? (item.correct || '') : (item.sequence || '');
+  answers[currentIndex] = { user: input.value, correct: correct, type: item.type };
+  updateNextButton();
+}
+
+function captureLetters() {
+  var input = document.getElementById('letters-input');
+  if (!input) return;
+  answers[currentIndex] = input.value;
+  updateNextButton();
+}
+
+function captureOpen() {
+  var ta = document.getElementById('open-input');
+  openAnswer = ta ? ta.value : '';
+  updateNextButton();
+}
+
+function selectAnswer(val) {
+  answers[currentIndex] = val;
+  renderQuestion();
+}
+
+function selectThermo(val) {
+  answers[currentIndex] = parseInt(val, 10);
+  var el = document.getElementById('thermo-val');
+  if (el) el.textContent = val;
+  updateNextButton();
+}
+
+function updateNextButton() {
+  var item = currentModule.items[currentIndex];
+  var btn = document.getElementById('btn-next');
+  var last = currentIndex === currentModule.items.length - 1;
+  btn.textContent = last ? 'Ver resultados' : 'Siguiente';
+
+  if (item.type === 'open') { btn.disabled = false; return; }
+  if (item.type === 'memory' || item.type === 'rmem') {
+    var a = answers[currentIndex];
+    btn.disabled = !(a && a.user && a.user.trim().length > 0);
+    return;
+  }
+  if (item.type === 'letters') {
+    var v = answers[currentIndex];
+    btn.disabled = !(v && String(v).trim().length > 0);
+    return;
+  }
+  btn.disabled = answers[currentIndex] === null || answers[currentIndex] === undefined;
+}
+
+function nextQuestion() {
+  var item = currentModule.items[currentIndex];
+  if (item.type === 'open') captureOpen();
+  if (item.type === 'memory' || item.type === 'rmem') captureMemory();
+  if (item.type === 'letters') captureLetters();
+
+  if (currentIndex < currentModule.items.length - 1) {
+    currentIndex++;
+    memoryShown = false;
+    renderQuestion();
+  } else {
+    showResults();
+  }
+}
+
+function prevQuestion() {
+  if (currentIndex > 0) {
+    currentIndex--;
+    memoryShown = false;
+    renderQuestion();
+  }
+}
+
+/* ---------- Calificación: módulos de síntomas ---------- */
+function calculateScore() {
+  var score = 0, maxScore = 0;
+  currentModule.items.forEach(function (item, i) {
+    if (item.type === 'open') return;
+    if (item.type === 'freq') {
+      maxScore += 3;
+      score += (answers[i] !== null && answers[i] !== undefined) ? answers[i] : 0;
+    } else if (item.type === 'thermo') {
+      maxScore += 10;
+      var val = (answers[i] !== null && answers[i] !== undefined) ? answers[i] : 0;
+      score += item.invert ? (10 - val) : val;
+    } else if (item.type === 'memory' || item.type === 'rmem') {
+      maxScore += 3;
+      if (!isCorrect(item, answers[i])) score += 3;
+    } else if (item.type === 'search') {
+      maxScore += 3;
+      if (answers[i] !== item.count) score += 3;
+    } else if (item.type === 'stroop') {
+      maxScore += 3;
+      if (answers[i] !== item.color) score += 3;
+    } else if (item.type === 'scene') {
+      maxScore += 3;
+      if (answers[i] !== item.correct) score += 3;
+    } else if (item.type === 'choice') {
+      maxScore += 3;
+      if (answers[i] !== item.correct) score += 3;
+    }
+  });
+  var pct = maxScore > 0 ? Math.round((score / maxScore) * 100) : 0;
+  var level = pct >= 65 ? 'high' : (pct >= 35 ? 'mid' : 'low');
+  return { score: score, maxScore: maxScore, pct: pct, level: level };
+}
+
+function levelText(level) {
+  if (level === 'low') return 'Bajo';
+  if (level === 'mid') return 'Moderado';
+  return 'Elevado';
+}
+
+/* ---------- Calificación: módulo de cognición (perfil) ---------- */
+function normalize(s) { return String(s || '').replace(/[^0-9A-Za-z]/g, '').toUpperCase(); }
+function sortLetters(s) {
+  var clean = normalize(s);
+  var digits = clean.replace(/[^0-9]/g, '').split('').sort().join('');
+  var letters = clean.replace(/[^A-Z]/g, '').split('').sort().join('');
+  return digits + letters;
+}
+
+function isCorrect(item, ans) {
+  if (ans === null || ans === undefined) return false;
+  if (item.type === 'choice') return ans === item.correct;
+  if (item.type === 'memory') return !!ans.user && normalize(ans.user) === normalize(item.sequence);
+  if (item.type === 'rmem') return !!ans.user && normalize(ans.user) === normalize(item.correct);
+  if (item.type === 'search') return ans === item.count;
+  if (item.type === 'stroop') return ans === item.color;
+  if (item.type === 'coding') return String(ans) === String(item.correct);
+  if (item.type === 'letters') return sortLetters(ans) === sortLetters(item.correct);
+  if (item.type === 'matrix') return ans === item.correct;
+  return false;
+}
+
+function calculateCognitive() {
+  var byDomain = {}, totalCorrect = 0, totalScored = 0;
+  currentModule.items.forEach(function (item, i) {
+    if (item.type === 'open') return;
+    var d = item.domain || 'razonamiento';
+    if (!byDomain[d]) byDomain[d] = { correct: 0, total: 0 };
+    byDomain[d].total++;
+    totalScored++;
+    if (isCorrect(item, answers[i])) { byDomain[d].correct++; totalCorrect++; }
+  });
+  return { byDomain: byDomain, totalCorrect: totalCorrect, totalScored: totalScored };
+}
+
+function cognitiveBand(pct) {
+  if (pct >= 85) return { label: 'Por encima del rango esperado en este ejercicio', cls: 'band-high' };
+  if (pct >= 60) return { label: 'Dentro del rango esperado en este ejercicio', cls: 'band-mid' };
+  return { label: 'Por debajo del rango esperado en este ejercicio', cls: 'band-low' };
+}
+
+/* ---------- Calificación: batería de razonamiento (estimación de CI) ---------- */
+function calculateIq() {
+  var byDomain = {}, totalCorrect = 0, totalItems = 0;
+  IQ_DOMAIN_ORDER.forEach(function (d) { byDomain[d] = { correct: 0, total: 0 }; });
+
+  currentModule.items.forEach(function (item, i) {
+    if (item.type === 'open') return;
+    var d = item.domain;
+    if (!byDomain[d]) byDomain[d] = { correct: 0, total: 0 };
+    byDomain[d].total++;
+    totalItems++;
+    if (isCorrect(item, answers[i])) { byDomain[d].correct++; totalCorrect++; }
+  });
+
+  IQ_DOMAIN_ORDER.forEach(function (d) {
+    if (IQ_DOMAIN_MAX[d]) byDomain[d].total = IQ_DOMAIN_MAX[d];
+  });
+
+  var iq = 74 + 1.55 * totalCorrect;
+  iq = Math.max(72, Math.min(128, Math.round(iq)));
+  return { byDomain: byDomain, totalCorrect: totalCorrect, totalItems: totalItems, iq: iq };
+}
+
+function normalCdf(z) {
+  var t = 1 / (1 + 0.2316419 * Math.abs(z));
+  var d = 0.3989423 * Math.exp(-z * z / 2);
+  var p = d * t * (0.3193815 + t * (-0.3565638 + t * (1.781478 + t * (-1.821256 + t * 1.330274))));
+  return z > 0 ? 1 - p : p;
+}
+
+function iqBand(iq) {
+  if (iq >= 130) return { name: 'Muy superior', chip: 'chip-low', color: '#0e6b70', desc: 'Desempeño muy por encima de la media esperada en tareas de razonamiento abstracto.' };
+  if (iq >= 120) return { name: 'Superior', chip: 'chip-low', color: '#0e6b70', desc: 'Desempeño claramente por encima de la media en este ejercicio.' };
+  if (iq >= 110) return { name: 'Media alta', chip: 'chip-low', color: '#0e6b70', desc: 'Desempeño algo por encima de la media en este ejercicio.' };
+  if (iq >= 90)  return { name: 'Promedio', chip: 'chip-mid', color: '#b45309', desc: 'Desempeño dentro del rango medio esperado, el más frecuente en la población.' };
+  if (iq >= 80)  return { name: 'Media baja', chip: 'chip-mid', color: '#b45309', desc: 'Desempeño algo por debajo de la media en este ejercicio.' };
+  if (iq >= 70)  return { name: 'Límite', chip: 'chip-high', color: '#b91c1c', desc: 'Desempeño por debajo de lo esperado en este ejercicio. Conviene interpretarlo con cautela.' };
+  return { name: 'Muy bajo', chip: 'chip-high', color: '#b91c1c', desc: 'Desempeño muy por debajo de lo esperado en este ejercicio.' };
+}
+
+/* ---------- Resultados ---------- */
+function showResults() {
+  if (currentModule.id === 'cognicion') return showCognitiveResults();
+  if (currentModule.id === 'razonamiento') return showIqResults();
+  return showSymptomResults();
+}
+
+function resultFooter() {
+  var meta = MODULE_META[currentModule.id] || {};
+  return '<div class="result-block">' +
+      '<h3>Fuente y alcance</h3>' +
+      '<p><strong>Base orientativa:</strong> ' + (meta.source || '') + '. Los reactivos de esta página son adaptaciones y ampliaciones propias inspiradas en esa lógica; no son la versión oficial del instrumento ni están baremados.</p>' +
+      '<p>Esto orienta, no diagnostica. Un resultado bajo no descarta nada y uno alto no confirma nada. <strong>Lo mejor, siempre, es visitar a una especialista o un especialista titulado.</strong></p>' +
+    '</div>' +
+    '<div class="cta-row">' +
+      '<button class="btn btn-primary" onclick="printResult()">Imprimir o guardar en PDF</button>' +
+      '<button class="btn btn-secondary" onclick="shareResult()">Compartir resultado</button>' +
+      '<button class="btn btn-ghost" onclick="goHome()">Volver al inicio</button>' +
+    '</div>' +
+    '<p class="tiny">Nada de lo que contestaste salió de tu dispositivo: el cálculo se hace aquí mismo.</p>';
+}
+
+function showSymptomResults() {
+  var res = calculateScore();
+  var text = interpretation(currentModule.id, res.level);
+  var chip = res.level === 'low' ? 'chip-low' : (res.level === 'mid' ? 'chip-mid' : 'chip-high');
+  var bar = res.level === 'low' ? 'bar-low' : (res.level === 'mid' ? 'bar-mid' : 'bar-high');
+
+  document.getElementById('results-content').innerHTML =
+    '<div class="result-card">' +
+      '<div class="section-label">Resultado orientativo</div>' +
+      '<h2>' + currentModule.name + '</h2>' +
+      '<div class="result-score">' + res.pct + '%</div>' +
+      '<div class="result-sub">Indicadores marcados sobre el total posible</div>' +
+      '<div class="level-chip ' + chip + '">' + levelText(res.level) + '</div>' +
+      '<div class="bar"><div class="bar-fill ' + bar + '" style="width:' + res.pct + '%"></div></div>' +
+      '<div class="result-scale">' + res.score + ' de ' + res.maxScore + ' puntos · rangos de lectura: bajo por debajo de 35 %, moderado entre 35 % y 64 %, elevado desde 65 %</div>' +
+    '</div>' +
+    '<div class="result-block"><h3>Qué sugiere este resultado</h3><p>' + text + '</p></div>' +
+    '<div class="result-block">' +
+      '<h3>Para llevarlo a consulta</h3>' +
+      '<div class="step-card"><strong>1. Anota cuándo empezó</strong><span>Desde cuándo lo notas y si hubo un cambio claro (un duelo, una mudanza, un despido, un diagnóstico médico).</span></div>' +
+      '<div class="step-card"><strong>2. Anota qué te limita</strong><span>Qué dejaste de hacer, en el trabajo, la escuela, el sueño o las relaciones.</span></div>' +
+      '<div class="step-card"><strong>3. Guarda este resultado</strong><span>Imprímelo o toma captura: es un buen punto de partida para la primera sesión.</span></div>' +
+      '<div class="step-card"><strong>4. Pide ayuda a tiempo</strong><span>Si hay riesgo para tu vida o la de alguien más, acude de inmediato a urgencias o a los servicios de emergencia de tu localidad.</span></div>' +
+    '</div>' +
+    resultFooter();
+  showView('results');
+}
+
+function showCognitiveResults() {
+  var r = calculateCognitive();
+  var pct = r.totalScored ? Math.round((r.totalCorrect / r.totalScored) * 100) : 0;
+  var rows = '';
+  Object.keys(COGNITIVE_DOMAINS).forEach(function (k) {
+    var d = r.byDomain[k];
+    if (!d) return;
+    var dpct = d.total ? Math.round((d.correct / d.total) * 100) : 0;
+    var b = cognitiveBand(dpct);
+    var margin = d.total ? Math.round(100 / d.total) : 0;
+    rows += '<div class="profile-row">' +
+      '<div class="profile-head"><span>' + COGNITIVE_DOMAINS[k] + '</span><span>' + d.correct + ' de ' + d.total + ' · ' + dpct + '%</span></div>' +
+      '<div class="profile-bar"><div class="profile-fill ' + b.cls + '" style="width:' + dpct + '%"></div></div>' +
+      '<div class="profile-band ' + b.cls + '">' + b.label + '</div>' +
+      '<div class="profile-note">Con ' + d.total + ' reactivos, un solo acierto mueve este dominio ±' + margin + ' puntos porcentuales: la estimación es aproximada.</div>' +
+    '</div>';
+  });
+
+  document.getElementById('results-content').innerHTML =
+    '<div class="result-card">' +
+      '<div class="section-label">Perfil orientativo</div>' +
+      '<h2>Cognición</h2>' +
+      '<div class="result-score">' + pct + '%</div>' +
+      '<div class="result-sub">' + r.totalCorrect + ' de ' + r.totalScored + ' reactivos resueltos correctamente</div>' +
+      '<p style="margin-top:1.25rem;font-size:.93rem;">Este bloque <strong>no mide un coeficiente intelectual y no arroja un número de CI</strong>. Un CI real exige instrumentos con derechos de autor, aplicación supervisada y baremos normativos por edad, escolaridad y país. Lo que ves aquí es un perfil por dominio, calculado solo con tus respuestas de hoy.</p>' +
+      '<div style="margin-top:1.6rem;">' + rows + '</div>' +
+    '</div>' +
+    '<div class="result-block">' +
+      '<h3>Sin baremos no hay percentil ni CI</h3>' +
+      '<p>Convertir un desempeño en percentil o en CI exige datos normativos de una población de referencia, y este ejercicio no los tiene. Por eso las bandas de arriba son descriptivas: comparan tu desempeño con el total de reactivos de este módulo, <strong>no con otras personas</strong>.</p>' +
+      '<p>El sueño, el cansancio, la ansiedad y el ambiente donde contestaste cambian el resultado. Ninguna de esas cosas se controla aquí.</p>' +
+    '</div>' +
+    resultFooter();
+  showView('results');
+}
+
+function showIqResults() {
+  var r = calculateIq();
+  var band = iqBand(r.iq);
+  var percentile = Math.round(normalCdf((r.iq - 100) / 15) * 100);
+  var rows = '';
+
+  IQ_DOMAIN_ORDER.forEach(function (k) {
+    var d = r.byDomain[k];
+    var max = IQ_DOMAIN_MAX[k] || d.total;
+    var dpct = max ? Math.round((d.correct / max) * 100) : 0;
+    var tone = dpct >= 75 ? '#0e6b70' : (dpct >= 50 ? '#d97706' : '#b91c1c');
+    rows += '<tr>' +
+      '<td><span class="dot" style="background:' + tone + '"></span>' + IQ_DOMAINS[k] + '</td>' +
+      '<td>' + d.correct + ' / ' + max + '</td>' +
+      '<td>' + dpct + '%</td>' +
+    '</tr>';
+  });
+
+  document.getElementById('results-content').innerHTML =
+    '<div class="result-card">' +
+      '<div class="section-label">Estimación orientativa</div>' +
+      '<h2>Razonamiento e inteligencia</h2>' +
+      '<div class="result-score">' + r.iq + '</div>' +
+      '<div class="result-sub">Estimación sobre una escala con media 100 y desviación estándar 15</div>' +
+      '<div class="level-chip ' + band.chip + '">' + band.name + '</div>' +
+      '<div class="bar"><div class="bar-fill bar-high" style="width:' + Math.max(4, Math.min(100, ((r.iq - 70) / 60) * 100)) + '%"></div></div>' +
+      '<div class="result-scale">Percentil estimado: ' + percentile + ' · ' + r.totalCorrect + ' de ' + r.totalItems + ' reactivos correctos · intervalo aproximado por el número de reactivos: ' + Math.max(72, r.iq - 8) + ' a ' + Math.min(128, r.iq + 8) + '</div>' +
+      '<p style="margin-top:1.4rem;font-size:.93rem;">' + band.desc + '</p>' +
+    '</div>' +
+
+    '<div class="result-block">' +
+      '<h3>Desglose por subprueba</h3>' +
+      '<table class="subtests">' +
+        '<thead><tr><th>Subprueba</th><th>Aciertos</th><th>Porcentaje</th></tr></thead>' +
+        '<tbody>' + rows +
+        '<tr><td>Total</td><td>' + r.totalCorrect + ' / ' + r.totalItems + '</td><td>' + Math.round((r.totalCorrect / r.totalItems) * 100) + '%</td></tr>' +
+        '</tbody>' +
+      '</table>' +
+      '<p style="font-size:.88rem;color:var(--ink-3);">Las subpruebas siguen la estructura clásica de una batería de inteligencia: razonamiento abstracto con matrices, razonamiento fluido con series y analogías, memoria de trabajo con dígitos en orden inverso, velocidad de procesamiento con la tarea de claves y memoria de trabajo con letras y números.</p>' +
+    '</div>' +
+
+    '<div class="result-block">' +
+      '<h3>Cómo se calculó este número</h3>' +
+      '<p>Puntaje directo sobre ' + r.totalItems + ' reactivos con respuesta correcta. '
+      '<strong>Cada acierto suma 1.55 puntos</strong> y el total arranca en 74: el recorrido va de '
+      '74 (cero aciertos) a 128 (los ' + r.totalItems + ' aciertos). El techo se fija a propósito, porque '
+      'una página de 40 reactivos no puede sostener una estimación más alta. Este ejercicio '
+      '<strong>no aplica corrección por adivinación</strong>, así que elegir al azar puede inflar '
+      'ligeramente el puntaje.</p>' +
+      '<p>La conversión a percentil usa la curva normal con media 100 y desviación estándar 15, que es el estándar de las escalas de inteligencia. Sin embargo, <strong>la página no está baremada</strong>: no hay datos normativos por edad, escolaridad ni país, y por eso el intervalo es amplio y el resultado es solo indicativo.</p>' +
+      '<p><strong>Por qué no hay una prueba de CI completa.</strong> Los instrumentos reales con derechos de autor, como el WAIS-IV o las Matrices Progresivas de Raven, se aplican de forma estandarizada, con tiempos controlados y baremos específicos. Reproducir sus reactivos aquí no sería legal ni válido. Lo que puedes hacer es usar esta estimación como una señal: si te interesa un dato firme, se solicita con un profesional titulado.</p>' +
+    '</div>' +
+
+    '<div class="result-block">' +
+      '<h3>Qué NO significa este número</h3>' +
+      '<ul>' +
+        '<li><strong>No es un diagnóstico.</strong> Un puntaje bajo en un día con poco sueño no dice nada sobre tu capacidad real.</li>' +
+        '<li><strong>No mide todo lo que importa.</strong> Creatividad, empatía, criterio, memoria autobiográfica y sabiduría práctica quedan fuera.</li>' +
+        '<li><strong>No es estable de por vida.</strong> Práctica, cansancio, ansiedad y contexto mueven el resultado varios puntos.</li>' +
+        '<li><strong>No sirve para comparar personas.</strong> Sin baremos poblacionales, dos personas que contestaron aquí no están en igualdad de condiciones.</li>' +
+      '</ul>' +
+    '</div>' +
+
+    resultFooter();
+  showView('results');
+}
+
+/* ---------- Utilidades de salida ---------- */
+function printResult() { window.print(); }
+
+function shareResult() {
+  var text;
+  if (currentModule.id === 'razonamiento') {
+    var r = calculateIq();
+    text = 'Hice la batería de razonamiento de Mente Clara: ' + r.totalCorrect + ' de ' + r.totalItems +
+           ' reactivos correctos (estimación orientativa, no un diagnóstico).';
+  } else if (currentModule.id === 'cognicion') {
+    var c = calculateCognitive();
+    text = 'Hice el módulo de cognición de Mente Clara: ' + c.totalCorrect + ' de ' + c.totalScored +
+           ' reactivos correctos. Es un perfil orientativo, no un test de CI.';
+  } else {
+    var res = calculateScore();
+    text = 'Hice el módulo de ' + currentModule.name + ' de Mente Clara: ' + res.pct +
+           ' % de indicadores marcados (resultado orientativo, no un diagnóstico).';
+  }
+  text += '\nhttps://barba-rasta.github.io/mente-clara/';
+
+  if (navigator.share) {
+    navigator.share({ text: text }).catch(function () { copyText(text); });
+  } else {
+    copyText(text);
+  }
+}
+
+function copyText(text) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(function () { alert('Resultado copiado al portapapeles.'); },
+      function () { alert(text); });
+    return;
+  }
+  alert(text);
+}
+
+function escapeHtml(text) {
+  var d = document.createElement('div');
+  d.textContent = String(text == null ? '' : text);
+  return d.innerHTML;
+}
+
+/* ---------- Comentarios (solo en este navegador) ---------- */
+function getComments() {
+  try { return JSON.parse(localStorage.getItem('menteclara_comments') || '[]'); }
+  catch (e) { return []; }
+}
+function saveComments(list) { localStorage.setItem('menteclara_comments', JSON.stringify(list)); }
+
+function addComment() {
+  var name = (document.getElementById('comment-name').value || 'Anónimo').trim().slice(0, 40);
+  var text = (document.getElementById('comment-text').value || '').trim().slice(0, 800);
+  if (!text) { alert('Escribe un comentario antes de publicar.'); return; }
+  var list = getComments();
+  list.unshift({
+    name: name, text: text,
+    date: new Date().toLocaleString('es-MX', { dateStyle: 'medium', timeStyle: 'short' })
+  });
+  saveComments(list);
+  document.getElementById('comment-name').value = '';
+  document.getElementById('comment-text').value = '';
+  renderComments();
+}
+
+function renderComments() {
+  var list = getComments();
+  var el = document.getElementById('comments-list');
+  if (!el) return;
+  if (list.length === 0) {
+    el.innerHTML = '<div class="no-comments">Aún no hay comentarios. Sé la primera persona en dejar uno.</div>';
+    return;
+  }
+  el.innerHTML = list.map(function (c) {
+    return '<div class="comment-item">' +
+      '<div class="comment-meta"><span class="comment-author">' + escapeHtml(c.name) + '</span><span>' + escapeHtml(c.date) + '</span></div>' +
+      '<div class="comment-body">' + escapeHtml(c.text) + '</div>' +
+    '</div>';
+  }).join('');
+}
+
+/* ---------- Atajos de teclado ---------- */
+function bindKeys() {
+  document.addEventListener('keydown', function (e) {
+    if (!document.getElementById('view-quiz').classList.contains('is-active')) return;
+    var tag = (e.target.tagName || '').toLowerCase();
+    if (tag === 'input' || tag === 'textarea') return;
+
+    var item = currentModule.items[currentIndex];
+    var n = parseInt(e.key, 10);
+    if (n >= 1 && n <= 4) {
+      if (item.type === 'freq') selectAnswer(n - 1);
+      else if (item.type === 'scene' || item.type === 'choice' || item.type === 'matrix') selectAnswer(n - 1);
+      else if (item.type === 'coding') selectAnswer(String(n));
+      return;
+    }
+    if (e.key === 'ArrowRight' && !document.getElementById('btn-next').disabled) nextQuestion();
+    if (e.key === 'ArrowLeft') prevQuestion();
+  });
+}
+
+/* ---------- Arranque ---------- */
+renderModules();
+bindKeys();
+
+  </script>
+</body>
+</html>
